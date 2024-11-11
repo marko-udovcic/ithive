@@ -15,9 +15,9 @@ target/
 env_file.env
 
 ### IntelliJ IDEA ###
-.idea
+#.idea
 *.iws
-*.iml
+#*.iml
 *.ipr
 
 ### NetBeans ###

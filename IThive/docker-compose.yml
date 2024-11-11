@@ -12,6 +12,7 @@ services:
 
     volumes:
       - .:/app
+      - ./pom.xml:/app/pom.xml
     ports:
       - "8089:8089"
     depends_on:
