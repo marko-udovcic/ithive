@@ -1,4 +1,4 @@
-package com.example.IThive.controller;
+package com.itm.ithive.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
