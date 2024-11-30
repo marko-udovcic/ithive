@@ -1,11 +1,9 @@
-package com.example.IThive.model;
+package com.itm.ithive.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @Entity

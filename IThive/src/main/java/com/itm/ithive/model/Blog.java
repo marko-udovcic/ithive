@@ -1,4 +1,4 @@
-package com.example.IThive.model;
+package com.itm.ithive.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

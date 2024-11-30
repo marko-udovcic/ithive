@@ -1,7 +1,7 @@
-package com.example.IThive.model;
+package com.itm.ithive.model;
 
-import com.example.IThive.model.Enums.Role;
-import com.example.IThive.model.Enums.Status;
+import com.itm.ithive.model.Enums.Role;
+import com.itm.ithive.model.Enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.example.IThive.model.Enums;
+package com.itm.ithive.model.Enums;
 
 public enum Status {
         Approved,
