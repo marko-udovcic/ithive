@@ -1,7 +1,7 @@
 package com.itm.ithive.controller;
 
-import com.example.IThive.model.Comments;
-import com.example.IThive.service.CommentsService;
+import com.itm.ithive.model.Comments;
+import com.itm.ithive.service.CommentsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
