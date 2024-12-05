@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/login.css"/>
+</head>
+<body>
+<div class="login-register-container">
+    <div class="left-side">
+        <h2>Welcome back </h2>
+        <form>
+            <label>Username: </label>
+            <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+            />
+
+            <label>Password: </label>
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+            />
+            <button class="btn-login-register" type="submit">Login</button>
+            <h3 class="sign-up-text">
+                Don’t have an account <a th:href="@{/register}">Sign up</a>
+            </h3>
+        </form>
+    </div>
+    <div class="right-side">
+        <img th:src="@{/images/loginimg.png}" alt="loginimg">
+
+    </div>
+</div>
+</body>
+</html>
