@@ -10,12 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     @GetMapping("/test1")
-    public String home(){
-        return "index";
+    public String home() {
+        return "login";
     }
+
     @GetMapping("/")
-    public String home2(Model model){
+    public String home2(Model model) {
         model.addAttribute("message", "Thymeleaf!");
         return "index";
+    }
+
+    @GetMapping("/register")
+    public String showRegisterPage() {
+        return "register";
     }
 }
