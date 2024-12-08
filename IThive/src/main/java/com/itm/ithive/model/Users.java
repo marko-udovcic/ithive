@@ -34,7 +34,7 @@ public class Users {
     private String email;
 
     @Column(name = "password_hash", nullable = false, length = 255)
-    private String passwordHash;
+    private String password;
 
     @Enumerated(EnumType.STRING) //map enum as string in DB
     @Column(name = "role", nullable = false)
