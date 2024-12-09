@@ -5,18 +5,16 @@ import com.itm.ithive.model.Likes;
 import com.itm.ithive.repository.LikesRepository;
 import com.itm.ithive.service.LikesService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class LikesServiceImpl implements LikesService {
 
     private final LikesRepository likesRepository;
-
-    public LikesServiceImpl(LikesRepository likesRepository) {
-        this.likesRepository = likesRepository;
-    }
 
     @Override
     public List<Likes> findAllLikes() {

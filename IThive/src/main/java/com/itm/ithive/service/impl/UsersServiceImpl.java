@@ -7,6 +7,7 @@ import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.UsersRepository;
 import com.itm.ithive.service.UsersService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
-    @Autowired
-    private UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
 
     @Override
     public Users createUsers(Users user) {
