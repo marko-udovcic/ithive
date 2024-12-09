@@ -1,71 +1,75 @@
 package com.itm.ithive.security;
 
-import com.itm.ithive.model.Users;
-import com.itm.ithive.service.UsersService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itm.ithive.service.impl.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomSuccessHandler customSuccessHandler;
+
+    private final String[] PUBLIC_URLS = {
+            "/",
+            "/register",
+            "/css/**",
+            "/fonts/**",
+            "/resources/**",
+            "/js/**",
+            "/images/**",
+            "/webjars/**",
+            "/favicon.ico",
+            "/error",
+            "/h2-console/**",
+            "/api/v1/auth/**",
+            "/login",
+            "/users/**",
+            "/listUsers",
+    };
+
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class).build();
-    }
-
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder customPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(org.springframework.security.web.csrf.CookieCsrfTokenRepository.withHttpOnlyFalse()) // Store CSRF token in cookies
-                )
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/**").permitAll()  // public access to login and register
-                                .anyRequest().authenticated()  // all other paths require authentication
-                )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .permitAll()  // allow everyone to access the login page
-                                .failureUrl("/login?error=true")
-                                .defaultSuccessUrl("/users/listUsers", true)
-                )
-                .logout(logout ->
-                        logout.permitAll()  // allow logout
-                )
-                .sessionManagement(session ->
-                        session
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                                .maximumSessions(1)
-                                .expiredUrl("/login?expired=true")
-                );
+        http.authenticationProvider(authenticationProvider());
+        http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers(PUBLIC_URLS).permitAll();
+            auth.anyRequest().authenticated();
+        });
+        http.formLogin(form -> form.loginPage("/login").permitAll().successHandler(customSuccessHandler))
+                .logout(logout -> {
+                    logout.logoutUrl("/logout");
+                    logout.logoutSuccessUrl("/");
+                }).cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        // make admin in-memory
-        return new InMemoryUserDetailsManager();
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(customPasswordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        return daoAuthenticationProvider;
     }
+
 
 }
