@@ -1,4 +1,3 @@
-package com.itm.ithive.controller;
 
 import com.itm.ithive.model.Users;
 import com.itm.ithive.service.UsersService;
@@ -13,10 +12,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-
     @GetMapping
     public String home() {
         return "test";
     }
-
 }
