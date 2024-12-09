@@ -23,13 +23,13 @@ public class AuthController {
         return "login";
     }
 
-    @PostMapping("/checkLogin")
-    public String authenticateUser(@RequestParam String username, @RequestParam String password) {
-        if(usersService.authenticateUser(username, password)){
-            return "redirect:/home";
-        }
-        return "redirect:/login";
-    }
+//    @PostMapping("/checkLogin")
+//    public String authenticateUser(@RequestParam String username, @RequestParam String password) {
+//        if(usersService.authenticateUser(username, password)){
+//            return "redirect:/home";
+//        }
+//        return "redirect:/login";
+//    }
 
     @GetMapping("/register")
     public String registrationForm() {
