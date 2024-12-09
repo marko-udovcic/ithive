@@ -8,18 +8,11 @@ import com.itm.ithive.repository.UsersRepository;
 import com.itm.ithive.service.UsersService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -39,12 +32,12 @@ public class UsersServiceImpl implements UsersService {
 
 
     @Override
-    public Users registerUser (Users user){
-        if (user == null){
+    public Users registerUser(Users user) {
+        if (user == null) {
             return new Users();
             // throw an exception
         }
-        if (usersRepository.findByUsername(user.getUsername()) != null){
+        if (!(usersRepository.findByUsername(user.getUsername()).isEmpty())) {
             return new Users();
             // throw an exception
         }
@@ -57,10 +50,10 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public boolean authenticateUser (String username, String password){
-        Users user = findByUsername(username);
+    public boolean authenticateUser(String username, String password) {
+        Optional<Users> user = findByUsername(username);
 
-        if (user != null && passwordEncoder.matches(password, user.getPassword())){
+        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
             System.out.println(password);
 //            UsernamePasswordAuthenticationToken authenticationToken =
 //                    new UsernamePasswordAuthenticationToken(username, password);
@@ -79,12 +72,12 @@ public class UsersServiceImpl implements UsersService {
         // make pagination
     }
 
-    public boolean checkPassword(Users user, String plainPassword){
+    public boolean checkPassword(Users user, String plainPassword) {
         return passwordEncoder.matches(plainPassword, user.getPassword());
     }
 
-    public Users findByUsername (String username){
-        return usersRepository.findByUsername(username).orElse(null);
+    public Optional<Users> findByUsername(String username) {
+        return usersRepository.findByUsername(username);
     }
 
 }
