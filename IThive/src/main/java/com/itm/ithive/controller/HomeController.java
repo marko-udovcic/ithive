@@ -1,29 +1,19 @@
 
-package com.itm.ithive.controller;
+import com.itm.ithive.model.Users;
+import com.itm.ithive.service.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //@RestController
-@RequestMapping()
 @Controller
+@RequestMapping("/home")
 public class HomeController {
-    @GetMapping("/test1")
-
+    @GetMapping
     public String home() {
-        return "login";
+        return "test";
     }
-
-    @GetMapping("/")
-    public String home2(Model model) {
-        model.addAttribute("message", "Thymeleaf!");
-        return "index";
-    }
-
-    @GetMapping("/register")
-    public String showRegisterPage() {
-        return "register";
-    }
-
 }
