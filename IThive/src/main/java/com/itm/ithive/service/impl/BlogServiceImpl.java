@@ -3,13 +3,13 @@ package com.itm.ithive.service.impl;
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.repository.BlogRepository;
 import com.itm.ithive.service.BlogService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BlogServiceImpl implements BlogService {
-    private BlogRepository blogRepository;
+    private final BlogRepository blogRepository;
 
     @Override
     public Blog createBlog(Blog blog) {

@@ -5,19 +5,16 @@ import com.itm.ithive.model.Followers;
 import com.itm.ithive.repository.FollowersRepository;
 import com.itm.ithive.service.FollowersService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class FollowersServiceImpl implements FollowersService {
 
     private final FollowersRepository followersRepository;
-
-    public FollowersServiceImpl(FollowersRepository followersRepository) {
-        this.followersRepository = followersRepository;
-    }
-
 
     @Override
     public List<Followers> findAllFollowers() {

@@ -5,18 +5,16 @@ import com.itm.ithive.model.Comments;
 import com.itm.ithive.repository.CommentsRepository;
 import com.itm.ithive.service.CommentsService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentsServiceImpl implements CommentsService {
 
     private final CommentsRepository commentsRepository;
-
-    public CommentsServiceImpl(CommentsRepository commentsRepository) {
-        this.commentsRepository = commentsRepository;
-    }
 
     //
 
