@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Document</title>
     <link rel="stylesheet" href="/css/register.css"/>
+    <link rel="stylesheet" href="/css/error.css"/>
 </head>
 <body>
 <div class="login-register-container">
     <div class="left-side">
+        <div th:if="${error == ''}" class="error">
+            <p>Credentials already existing, try some others!</p>
+        </div>
+        <!--        maybe make better responsive control when showing error -->
         <img th:src="@{/images/blogging.png}" alt="blogimg">
     </div>
     <div class="right-side">
