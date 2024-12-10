@@ -10,16 +10,16 @@
 <div class="login-register-container">
     <div class="left-side">
         <h2>Welcome back </h2>
-        <form action="checkLogin" method="POST">
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+        <form action="/login" method="POST">
+            <!--            <input type="hidden" name="_csrf" th:value="${_csrf.token}">-->
             <label>Username: </label>
             <label for="username"></label><input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Enter your username"
-                    required
-            />
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                required
+        />
 
             <label>Password: </label>
             <input
