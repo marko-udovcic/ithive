@@ -1,9 +1,12 @@
 package com.itm.ithive.controller;
 
+import com.itm.ithive.exceptions.UserAlreadyExisting;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.service.UsersService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -19,26 +22,30 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(HttpServletRequest request, Model model) {
+        String error = request.getParameter("error");
+        model.addAttribute("error", error);
+
         return "login";
     }
 
-//    @PostMapping("/checkLogin")
-//    public String authenticateUser(@RequestParam String username, @RequestParam String password) {
-//        if(usersService.authenticateUser(username, password)){
-//            return "redirect:/home";
-//        }
-//        return "redirect:/login";
-//    }
 
     @GetMapping("/register")
-    public String registrationForm() {
+    public String registrationForm(HttpServletRequest request, Model model) {
+        String error = request.getParameter("error");
+        model.addAttribute("error", error);
+
         return "register";
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute Users user) {
-        usersService.registerUser(user);
+    public String registerUser(@ModelAttribute Users user) throws UserAlreadyExisting {
+        try {
+            usersService.registerUser(user);
+        } catch (UserAlreadyExisting ex) {
+            throw ex;
+        }
+
         return "redirect:/login";
     }
 }
