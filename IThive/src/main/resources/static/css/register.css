@@ -47,15 +47,15 @@ form label {
   font-family: var(--font-primary);
 }
 .left-side {
-  width: 40%; /* Desna strana zauzima 50% širine */
-  height: 100%; /* Visina desne strane */
-  overflow: hidden; /* Sprečava prelivanje slike */
+  width: 40%; 
+  height: 100%; 
+  overflow: hidden; 
 }
 
 .left-side img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Slika se prilagođava veličini i obrezuje po potrebi */
+  object-fit: cover; 
 }
 input {
   height: 3rem;
@@ -88,19 +88,19 @@ input {
 }
 @media screen and (max-width: 768px) {
   .login-register-container {
-    flex-direction: column; /* Na manjim ekranima staviti dva diva jedan ispod drugog */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
   }
 
   .right-side {
-    width: 90%; /* Levom delu dajemo veću širinu na manjim ekranima */
+    width: 90%; 
     margin-right: 0;
     margin-top: 0%;
     margin-right: 0%;
   }
 
   .left-side {
-    display: none; /* Skrivamo desnu stranu (sliku) na manjim ekranima */
+    display: none; 
   }
 }
