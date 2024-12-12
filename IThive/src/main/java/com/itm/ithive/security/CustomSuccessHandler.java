@@ -19,15 +19,13 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String username = userDetails.getUsername();
-
+        //feature if we need to redirect user to different page
         boolean isUser = authentication.getAuthorities().stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(Role.User.name()));
 
-        if (isUser) {
-            response.sendRedirect("/home");
-            
-        } else {
-            response.sendRedirect("/login");
-        }
+
+        response.sendRedirect("/home");
+
+
     }
 }
