@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title th:text="${pageTitle}">Page Title</title>
-    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/profile.css"/>
 </head>
 <body>
 
-<div th:fragment="pageContainer">
-    <div class="container">
-        <div th:replace="~{::content}"></div>
-    </div>
+<!--Profile-fragment-->
+<div th:fragment="pageContainer" class="container">
+    <div th:replace="~{::content}"></div>
+    <div th:replace="~{::add-blog}"></div>
+    <div th:replace="~{::blogs-container}"></div>
 </div>
-
 
 <!-- Footer Fragment -->
 <div th:fragment="footer">
@@ -21,6 +21,6 @@
         <p>&copy; 2024 Your Company. All Rights Reserved.</p>
     </footer>
 </div>
-
 </body>
 </html>
+c
