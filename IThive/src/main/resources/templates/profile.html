@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/profile.css"/>
+</head>
+<body>
+<div th:replace="~{fragments :: pageContainer}">
+    <div th:fragment="content" class="test">
+        <h1>Welcome, <span th:text="${username}">Username</span>!</h1>
+        <p><strong>Email:</strong> <span th:text="${email}">Email</span></p>
+        <p><strong>First Name:</strong> <span th:text="${firstName}">First Name</span></p>
+        <p><strong>Last Name:</strong> <span th:text="${lastName}">Last Name</span></p>
+        <p><strong>Role:</strong> <span th:text="${role}">Role</span></p>
+    </div>
+</div>
+
+
+</body>
+</html>
