@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --orange: #fc3f02;
+  --white: #ffffff;
+  --headingblue: #222b38;
+  --bodytext: #565656;
+  --footercolor: #2b2b43;
+  --background-color: #f5f4f0;
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Roboto', sans-serif;
+}
+body{
+
+}
+.container{
+    max-width:1200px;
+    min-height:100vh;
+    margin: 0 auto;
+    background:red;
+}
