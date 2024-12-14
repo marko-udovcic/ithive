@@ -1,0 +1,112 @@
+
+.user-status ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.user-status ul li {
+    text-align: center;
+    margin: 0 15px;
+}
+
+#user-photo {
+    width: 60px;
+    height: 60px;
+    background-color: var(--headingblue);
+    color: var(--white);
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.count {
+    font-family: var(--font-secondary);
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.label {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    color: #888;
+}
+
+
+@media screen and (max-width: 600px) {
+    .user-status ul {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .user-status ul li {
+        margin: 0 15px;
+    }
+
+    #user-photo {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+    }
+
+    .count {
+        font-size: 20px;
+    }
+
+    .label {
+        font-size: 14px;
+    }
+
+    #username{
+        display: none;
+    }
+
+}
+
+
+@media screen and (min-width: 601px) {
+    body {
+        justify-content: flex-start;
+        padding-left: 20px;
+    }
+
+    .user-status ul {
+        justify-content: flex-start;
+    }
+
+    .user-status ul li {
+        margin: 0 30px;
+    }
+}
+
+
+
+button, input[type="submit"] {
+    background-color: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: var(--font-primary);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #e63946;
+    transform: scale(1.05);
+}
+
+button:active, input[type="submit"]:active {
+    background-color: #d6323b;
+    transform: scale(0.98);
+}
+
