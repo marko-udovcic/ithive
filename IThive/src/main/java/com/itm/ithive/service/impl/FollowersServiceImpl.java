@@ -2,6 +2,7 @@ package com.itm.ithive.service.impl;
 
 
 import com.itm.ithive.exceptions.SomethingWrong;
+import com.itm.ithive.model.Category;
 import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.FollowersRepository;
@@ -27,6 +28,8 @@ public class FollowersServiceImpl implements FollowersService {
 
     @Autowired
     private BlogServiceImpl blogService;
+
+    private final CategoryServiceImpl categoryService;
 
     private final FollowersRepository followersRepository;
 
@@ -77,7 +80,7 @@ public class FollowersServiceImpl implements FollowersService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         Users mainUser = usersService.findUserByUsername(customUserDetails.getUsername()).orElse(null);
-        if (user != null || mainUser != null){
+        if (user != null || mainUser != null) {
             Followers follow = new Followers();
             follow.setFollower(mainUser);
             follow.setFollowed(user);
@@ -87,45 +90,51 @@ public class FollowersServiceImpl implements FollowersService {
     }
 
     @Override
-    public Model userProfile(String url, Model model, Users user) {
-        if (user == null){ // main user
-            CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder
-                    .getContext().getAuthentication().getPrincipal();
+    public Model userProfile(Model model, Authentication authentication, Users user) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return model;
+        }
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        if (user == null) { // main user
             user = usersService.findUserByUsername(customUserDetails.getUsername()).orElseThrow(null); // make it right
             model.addAttribute("button", false);
-        }
-        else{ // other user
-            if(!doIFollow(user)){
+        } else { // other user
+            if (!doIFollow(user)) {
                 model.addAttribute("button", "Follow");
             }
 
         }
-
-
         model.addAttribute("username", user.getUsername());
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("firstName", customUserDetails.getFirstName());
+        model.addAttribute("lastName", customUserDetails.getLastName());
+        model.addAttribute("role", customUserDetails.getRole().name());
         model.addAttribute("followers", listWhoFollowsUser(user).size());
         model.addAttribute("following", listWhoIsUserFollowing(user).size());
         model.addAttribute("blogs", blogService.findBlogByUser(user).size());
+
+        List<Category> categories = categoryService.findAllCategories();
+        model.addAttribute("categories", categories);
 
         return model;
     }
 
     @Override
-    public boolean doIFollow(Users user){
+    public boolean doIFollow(Users user) {
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
 
         Users mainUser = usersService.findUserByUsername(customUserDetails.getUsername()).orElse(null);
 
-        if (user == null || mainUser == null){
+        if (user == null || mainUser == null) {
             throw new SomethingWrong("Error occured try again"); // change to throw an exception to see if session is still going
 //            usual error is "cannot convert String to customUserDetails"
         }
 
         List<Followers> userFollowersList = listWhoFollowsUser(user);
-        for (Followers f : userFollowersList){
-            if (f.getFollower().getUsername().equals(mainUser.getUsername())){
+        for (Followers f : userFollowersList) {
+            if (f.getFollower().getUsername().equals(mainUser.getUsername())) {
                 return true;
             }
         }
