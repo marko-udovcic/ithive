@@ -29,12 +29,11 @@ public class Blog {
 
     private String title;
 
-    @Lob
-    @Column(name = "img_url", nullable = true)
+    @Column(name = "img_url", columnDefinition = "TEXT" , nullable = true)
     private String imgUrl;
 
-    @Lob
-    @Column(name = "content", nullable = false)
+
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @CreationTimestamp

@@ -21,6 +21,48 @@
         <p>&copy; 2024 Your Company. All Rights Reserved.</p>
     </footer>
 </div>
+
+
+<!--User status: username, followers, following, blogs-->
+<div th:fragment="userStatus">
+    <nav class="user-status">
+        <ul>
+            <li>
+                <div id="user-photo">[[${username[0]}]]</div>
+            </li>
+            <li>
+                <span class="label" th:text="${username}"
+                      name="username"
+                      id="username"
+                      th:value="${username}"
+                ></span>
+            </li>
+            <li>
+                <span class="count" th:text="${following}"></span>
+                <span class="label">Following</span>
+            </li>
+            <li>
+                <span class="count" th:text="${followers}"></span>
+                <span class="label">Followers</span>
+            </li>
+            <li>
+                <span class="count" th:text="${blogs}"></span>
+                <span class="label">Blogs</span>
+            </li>
+            <li></li>
+            <li class="button" th:if="${button != false}">
+                <form action="/followers/setUsersFollowing" method="post">
+                    <input type="hidden" th:value="${username}" name="username">
+                    <input type="submit"
+                           th:value="${button == 'Follow' ? 'Follow' : 'Following'}"
+                            th:disabled="${button != 'Follow'}">
+                </form>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!--#########-->
+
+
 </body>
 </html>
-c

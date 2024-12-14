@@ -1,18 +1,32 @@
 package com.itm.ithive.service.impl;
 
 
+import com.itm.ithive.exceptions.SomethingWrong;
 import com.itm.ithive.model.Followers;
+import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.FollowersRepository;
 import com.itm.ithive.service.FollowersService;
+import com.itm.ithive.util.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class FollowersServiceImpl implements FollowersService {
+
+    @Autowired
+    private UsersServiceImpl usersService;
+
+    @Autowired
+    private BlogServiceImpl blogService;
 
     private final FollowersRepository followersRepository;
 
@@ -47,4 +61,76 @@ public class FollowersServiceImpl implements FollowersService {
     public void deleteFollower(long id) {
         followersRepository.deleteById(id);
     }
+
+    @Override
+    public List<Followers> listWhoFollowsUser(Users user) {
+        return followersRepository.findByFollowed(user);
+    }
+
+    @Override
+    public List<Followers> listWhoIsUserFollowing(Users user) {
+        return followersRepository.findByFollower(user);
+    }
+
+    @Override
+    public void followUser(Users user) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        Users mainUser = usersService.findUserByUsername(customUserDetails.getUsername()).orElse(null);
+        if (user != null || mainUser != null){
+            Followers follow = new Followers();
+            follow.setFollower(mainUser);
+            follow.setFollowed(user);
+            saveFollower(follow);
+        }
+//        add an exception
+    }
+
+    @Override
+    public Model userProfile(String url, Model model, Users user) {
+        if (user == null){ // main user
+            CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder
+                    .getContext().getAuthentication().getPrincipal();
+
+            user = usersService.findUserByUsername(customUserDetails.getUsername()).orElseThrow(null); // make it right
+            model.addAttribute("button", false);
+        }
+        else{ // other user
+            if(!doIFollow(user)){
+                model.addAttribute("button", "Follow");
+            }
+
+        }
+
+
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("followers", listWhoFollowsUser(user).size());
+        model.addAttribute("following", listWhoIsUserFollowing(user).size());
+        model.addAttribute("blogs", blogService.findBlogByUser(user).size());
+
+        return model;
+    }
+
+    @Override
+    public boolean doIFollow(Users user){
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+
+        Users mainUser = usersService.findUserByUsername(customUserDetails.getUsername()).orElse(null);
+
+        if (user == null || mainUser == null){
+            throw new SomethingWrong("Error occured try again"); // change to throw an exception to see if session is still going
+//            usual error is "cannot convert String to customUserDetails"
+        }
+
+        List<Followers> userFollowersList = listWhoFollowsUser(user);
+        for (Followers f : userFollowersList){
+            if (f.getFollower().getUsername().equals(mainUser.getUsername())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

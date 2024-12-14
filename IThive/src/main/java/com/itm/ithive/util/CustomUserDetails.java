@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -61,4 +62,13 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    private static final long serialVersionUID = 309623584880637894L;
+    private static final int VERSION = 2; // remember to change version
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(VERSION);
+    }
+
 }

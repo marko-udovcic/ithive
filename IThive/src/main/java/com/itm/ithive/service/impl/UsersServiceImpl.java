@@ -5,13 +5,17 @@ import com.itm.ithive.exceptions.SomethingWrong;
 import com.itm.ithive.exceptions.UserAlreadyExisting;
 import com.itm.ithive.model.Enums.Role;
 import com.itm.ithive.model.Enums.Status;
+import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.UsersRepository;
 import com.itm.ithive.service.UsersService;
+import com.itm.ithive.util.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +66,13 @@ public class UsersServiceImpl implements UsersService {
     public Users findByID(String id) {
         return usersRepository.findById(id).orElse(null);
     }
+
+
+    @Override
+    public Optional<Users> findUserByUsername(String username) {
+        return findByUsername(username);
+    }
+
 
     public boolean checkPassword(Users user, String plainPassword) {
         return passwordEncoder.matches(plainPassword, user.getPassword());

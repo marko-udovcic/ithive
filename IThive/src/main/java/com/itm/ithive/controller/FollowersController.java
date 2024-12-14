@@ -2,21 +2,31 @@ package com.itm.ithive.controller;
 
 
 import com.itm.ithive.model.Followers;
+import com.itm.ithive.model.Users;
 import com.itm.ithive.service.FollowersService;
+import com.itm.ithive.service.UsersService;
+import com.itm.ithive.util.CustomUserDetails;
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/followers")
 public class FollowersController {
 
-    private final FollowersService followersService;
+    @Autowired
+    private FollowersService followersService;
 
-    public FollowersController(FollowersService followersService) {
-        this.followersService = followersService;
-    }
+    @Autowired
+    private UsersService userService;
+
 
     @GetMapping
     public List<Followers> findAllFollowers() {
@@ -36,5 +46,14 @@ public class FollowersController {
     @DeleteMapping("/{id}")
     public void deleteFollower(@PathVariable long id) {
         followersService.deleteFollower(id);
+    }
+
+
+    @PostMapping("/setUsersFollowing")
+    public String setUsersFollowing(@RequestParam String username){
+        Users user = userService.findUserByUsername(username).orElse(null);
+        followersService.followUser(user);
+
+        return "redirect:/profile/usersProfile";
     }
 }
