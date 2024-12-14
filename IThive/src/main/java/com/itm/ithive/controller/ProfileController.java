@@ -32,28 +32,8 @@ public class ProfileController {
     private final FollowersService followersService;
 
     @GetMapping
-
-    public String showUserDetails(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated()) {
-
-            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-            String role = customUserDetails.getRole().name();
-            String firstLetterOfFirstname = String.valueOf(customUserDetails.getFirstName().charAt(0));
-
-            model.addAttribute("username", customUserDetails.getUsername());
-            model.addAttribute("email", customUserDetails.getEmail());
-            model.addAttribute("firstName", customUserDetails.getFirstName());
-            model.addAttribute("lastName", customUserDetails.getLastName());
-            model.addAttribute("firstLetter", firstLetterOfFirstname);
-            model.addAttribute("role", role);
-
-            List<Category> categories = categoryService.findAllCategories();
-            categories.forEach(category -> System.out.println(category.getName()));
-            model.addAttribute("categories", categories);
-
-        }
+    public String showUserDetails(Model model, Authentication authentication) {
+        model = followersService.userProfile(model, authentication, null);
         return "profile";
     }
 
@@ -85,25 +65,18 @@ public class ProfileController {
         return "redirect:/home";
     }
 
-    @GetMapping("/myProfile")
-    public String userStatus(HttpServletRequest request, Model model) {
-        String url = request.getRequestURI();
-        model = followersService.userProfile(url, model, null);
-
-        return "profileV2";
-    }
 
     @GetMapping("/usersProfile")
-    public String showUsersProfile(HttpServletRequest request, Model model){
+    public String showUsersProfile(HttpServletRequest request, Model model) {
 
         Users user = usersService.findUserByUsername("admin").orElse(null);
 //        admin is used as placeholder, send other user when implementing function
 
         String url = request.getRequestURI();
-        model = followersService.userProfile(url, model, user);
+//        model = followersService.userProfile(url, model, user);
 
 
-        return "profileV2";
+        return "profile";
     }
 
 }
