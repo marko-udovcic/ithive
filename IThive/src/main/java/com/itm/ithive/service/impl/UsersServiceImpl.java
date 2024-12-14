@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -55,6 +56,11 @@ public class UsersServiceImpl implements UsersService {
     public List<Users> listAll() {
         return usersRepository.findAll();
         // make pagination
+    }
+
+    @Override
+    public Users findByID(String id) {
+        return usersRepository.findById(id).orElse(null);
     }
 
     public boolean checkPassword(Users user, String plainPassword) {
