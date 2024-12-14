@@ -5,8 +5,10 @@ import com.itm.ithive.model.Category;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.service.BlogService;
 import com.itm.ithive.service.CategoryService;
+import com.itm.ithive.service.FollowersService;
 import com.itm.ithive.service.UsersService;
 import com.itm.ithive.util.CustomUserDetails;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +29,7 @@ public class ProfileController {
     private final CategoryService categoryService;
     private final BlogService blogService;
     private final UsersService usersService;
+    private final FollowersService followersService;
 
     @GetMapping
 
@@ -81,4 +84,26 @@ public class ProfileController {
 
         return "redirect:/home";
     }
+
+    @GetMapping("/myProfile")
+    public String userStatus(HttpServletRequest request, Model model) {
+        String url = request.getRequestURI();
+        model = followersService.userProfile(url, model, null);
+
+        return "profileV2";
+    }
+
+    @GetMapping("/usersProfile")
+    public String showUsersProfile(HttpServletRequest request, Model model){
+
+        Users user = usersService.findUserByUsername("admin").orElse(null);
+//        admin is used as placeholder, send other user when implementing function
+
+        String url = request.getRequestURI();
+        model = followersService.userProfile(url, model, user);
+
+
+        return "profileV2";
+    }
+
 }
