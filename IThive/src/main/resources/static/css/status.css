@@ -15,7 +15,7 @@
 #user-photo {
     width: 60px;
     height: 60px;
-    background-color: var(--headingblue);
+    background-color: var(--orange);
     color: var(--white);
     font-size: 30px;
     font-weight: bold;
@@ -24,6 +24,8 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
+    text-transform: uppercase;
+    font-family: var(--font-primary);
 }
 
 .count {
@@ -103,6 +105,7 @@ button, input[type="submit"] {
 button:hover, input[type="submit"]:hover {
     background-color: #e63946;
     transform: scale(1.05);
+    color:white;
 }
 
 button:active, input[type="submit"]:active {
