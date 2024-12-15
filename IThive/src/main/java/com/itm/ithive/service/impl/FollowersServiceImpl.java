@@ -3,6 +3,8 @@ package com.itm.ithive.service.impl;
 
 import com.itm.ithive.exceptions.SomethingWrong;
 import com.itm.ithive.model.Category;
+import com.itm.ithive.model.Enums.Role;
+import com.itm.ithive.model.Enums.Status;
 import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.FollowersRepository;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -113,9 +116,19 @@ public class FollowersServiceImpl implements FollowersService {
         model.addAttribute("followers", listWhoFollowsUser(user).size());
         model.addAttribute("following", listWhoIsUserFollowing(user).size());
         model.addAttribute("blogs", blogService.findBlogByUser(user).size());
+        model.addAttribute("userStatus", user.getStatus().toString());
 
         List<Category> categories = categoryService.findAllCategories();
         model.addAttribute("categories", categories);
+
+        List<Users> pendingUsers = usersService.findByStatus(Status.Pending);
+        
+        List<Role> roles = Arrays.asList(Role.values());
+        List<Status> statuses = Arrays.asList(Status.values());
+        model.addAttribute("roles", roles);
+        model.addAttribute("statuses", statuses);
+        model.addAttribute("pendingUsers", pendingUsers);
+
 
         return model;
     }
