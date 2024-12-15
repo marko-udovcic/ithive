@@ -7,6 +7,7 @@ import com.itm.ithive.service.BlogService;
 import com.itm.ithive.service.CategoryService;
 import com.itm.ithive.service.FollowersService;
 import com.itm.ithive.service.UsersService;
+import com.itm.ithive.service.impl.ProfileServiceImpl;
 import com.itm.ithive.util.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,6 +31,8 @@ public class ProfileController {
     private final CategoryService categoryService;
     private final BlogService blogService;
     private final UsersService usersService;
+    private final ProfileServiceImpl profileService;
+
     private final FollowersService followersService;
 
     @GetMapping
@@ -37,7 +41,26 @@ public class ProfileController {
         return "profile";
     }
 
-    @GetMapping("/add-blog")
+
+    @GetMapping("/become-blogger")
+    public String becomeBlogger(Model model) {
+        profileService.setUserStatusToPending(model);
+
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/updateUserStatus")
+    public String updateUserStatus(
+            @RequestParam("username") String username,
+            @RequestParam("status") String status,
+            @RequestParam("roles") String role) {
+
+        profileService.updateUserStatusAndRole(username, status, role);
+        return "redirect:/profile";
+
+    }
+
+    @PostMapping("/add-blog")
     public String addBlog(
             @RequestParam String title,
             @RequestParam Long categoryId,
