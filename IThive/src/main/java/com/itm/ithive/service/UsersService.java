@@ -2,6 +2,7 @@ package com.itm.ithive.service;
 
 
 import com.itm.ithive.exceptions.UserAlreadyExisting;
+import com.itm.ithive.model.Enums.Status;
 import com.itm.ithive.model.Users;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.ui.Model;
@@ -21,4 +22,5 @@ public interface UsersService {
 
     public Optional<Users> findUserByUsername(String username);
 
+    List<Users> findByStatus(Status status);
 }

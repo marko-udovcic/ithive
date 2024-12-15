@@ -73,6 +73,11 @@ public class UsersServiceImpl implements UsersService {
         return findByUsername(username);
     }
 
+    @Override
+    public List<Users> findByStatus(Status status) {
+        return usersRepository.findByStatus(status);
+    }
+
 
     public boolean checkPassword(Users user, String plainPassword) {
         return passwordEncoder.matches(plainPassword, user.getPassword());
