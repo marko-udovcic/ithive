@@ -5,23 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title th:text="${pageTitle}">Page Title</title>
     <link rel="stylesheet" href="/css/profile.css"/>
+    <link rel="stylesheet" href="/css/status.css"/>
+    <link rel="stylesheet" href="/css/navbar.css"/>
 </head>
 <body>
-
 <!--Profile-fragment-->
-<div th:fragment="pageContainer" class="container">
-    <div th:replace="~{::content}"></div>
-    <div th:replace="~{::add-blog}"></div>
-    <div th:replace="~{::blogs-container}"></div>
+<!-- <div th:fragment="pageContainer" class="container">
+<div th:replace="~{::content}"></div>
+<div th:replace="~{::add-blog}"></div>
+<div th:replace="~{::blogs-container}"></div>
+</div> -->
+<!--Header fragment-->
+<div th:fragment="navbar">
+    <header>
+        <h1>IThive</h1>
+        <nav>
+            <a href="#">Following</a>
+            <a href="#">Explore</a>
+            <a href="/profile">My Profile</a>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </nav>
+    </header>
 </div>
-
 <!-- Footer Fragment -->
 <div th:fragment="footer">
     <footer>
         <p>&copy; 2024 Your Company. All Rights Reserved.</p>
     </footer>
 </div>
-
 
 <!--User status: username, followers, following, blogs-->
 <div th:fragment="userStatus">
@@ -31,11 +44,13 @@
                 <div id="user-photo">[[${username[0]}]]</div>
             </li>
             <li>
-                <span class="label" th:text="${username}"
-                      name="username"
-                      id="username"
-                      th:value="${username}"
-                ></span>
+            <span
+                    class="label"
+                    th:text="${username}"
+                    name="username"
+                    id="username"
+                    th:value="${username}"
+            ></span>
             </li>
             <li>
                 <span class="count" th:text="${following}"></span>
@@ -52,17 +67,17 @@
             <li></li>
             <li class="button" th:if="${button != false}">
                 <form action="/followers/setUsersFollowing" method="post">
-                    <input type="hidden" th:value="${username}" name="username">
-                    <input type="submit"
-                           th:value="${button == 'Follow' ? 'Follow' : 'Following'}"
-                            th:disabled="${button != 'Follow'}">
+                    <input type="hidden" th:value="${username}" name="username"/>
+                    <input
+                            type="submit"
+                            th:value="${button == 'Follow' ? 'Follow' : 'Following'}"
+                            th:disabled="${button != 'Follow'}"
+                    />
                 </form>
             </li>
         </ul>
     </nav>
 </div>
 <!--#########-->
-
-
 </body>
 </html>
