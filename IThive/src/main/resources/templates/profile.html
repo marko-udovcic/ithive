@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/profile.css"/>
     <link rel="stylesheet" href="/css/status.css"/>
     <link rel="stylesheet" href="/css/navbar.css"/>
+    <link rel="stylesheet" href="/css/imageUpload.css"/>
 </head>
 <body>
 <div th:replace="~{fragments::navbar}"></div>
@@ -93,8 +94,17 @@
                         name="content"
                         placeholder="Write your blog here..."
                 ></textarea>
+                <br>
+                <!--     upload         -->
+                <div th:replace="~{fragments :: imageUpload}" ></div>
+                <input type="hidden"
+                       id="image_name"
+                       name="image_name"
+                       th:value="${img_UUID}"
+                />
+                <!--     upload         -->
                 <button type="submit" class="submitBtn">Add blog</button>
-            </form>
+        </form>
         </div>
     </div>
     <div
@@ -112,5 +122,7 @@
 </div>
 
 <script src="./js/app.js"></script>
+<script src="./js/imageUpload.js"></script>
+
 </body>
 </html>

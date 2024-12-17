@@ -29,6 +29,8 @@
         </nav>
     </header>
 </div>
+
+
 <!-- Footer Fragment -->
 <div th:fragment="footer">
     <footer>
@@ -79,5 +81,22 @@
     </nav>
 </div>
 <!--#########-->
+
+<!--Image upload-->
+<div th:fragment="imageUpload">
+    <div class="drop-area" id="drop-area">
+        <div class="img_icon">
+            <img th:src="@{/images/image_icon.png}" alt="image_icon">
+        </div>
+        <p>Drag and drop a JPEG file here or</p>
+        <p><strong>Choose Image</strong></p>
+        <input type="file" id="fileInput" style="display: none;" accept="image/jpeg">
+    </div>
+
+    <div id="message"></div>
+</div>
+<!--#########-->
+
+
 </body>
 </html>
