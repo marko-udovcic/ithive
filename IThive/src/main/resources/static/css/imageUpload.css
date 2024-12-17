@@ -1,0 +1,67 @@
+.drop-area {
+    border: 2px solid var(--orange);
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    font-size: 16px;
+    width: 400px;
+    margin: 0 auto;
+    background-color: var(--white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.drop-area.hover {
+    background-color: #f0f8ff;
+    transform: scale(1.02);
+}
+
+.img_icon img {
+    width: 50%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+#message {
+    margin-top: 15px;
+    font-size: 14px;
+    font-family: var(--font-secondary);
+    text-align: center;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+}
+
+.drop-area p {
+    color: var(--bodytext);
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.drop-area p strong {
+    font-weight: 600;
+    color: var(--orange);
+}
+
+@media screen and (max-width: 768px) {
+    .drop-area {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .img_icon img {
+        width: 40%;
+    }
+
+    .container {
+        margin: 0 2rem;
+    }
+}
