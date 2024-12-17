@@ -110,9 +110,9 @@ public class FollowersServiceImpl implements FollowersService {
         }
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
-        model.addAttribute("firstName", customUserDetails.getFirstName());
-        model.addAttribute("lastName", customUserDetails.getLastName());
-        model.addAttribute("role", customUserDetails.getRole().name());
+        model.addAttribute("firstName", user.getFirstname());
+        model.addAttribute("lastName", user.getLastname());
+        model.addAttribute("role", user.getRole().name());
         model.addAttribute("followers", listWhoFollowsUser(user).size());
         model.addAttribute("following", listWhoIsUserFollowing(user).size());
         model.addAttribute("blogs", blogService.findBlogByUser(user).size());
