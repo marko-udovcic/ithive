@@ -3,11 +3,9 @@ package com.itm.ithive.controller;
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Category;
 import com.itm.ithive.model.Users;
-import com.itm.ithive.service.BlogService;
-import com.itm.ithive.service.CategoryService;
-import com.itm.ithive.service.FollowersService;
-import com.itm.ithive.service.UsersService;
+import com.itm.ithive.service.*;
 import com.itm.ithive.service.impl.ProfileServiceImpl;
+import com.itm.ithive.service.impl.UploadServiceImpl;
 import com.itm.ithive.util.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/profile")
@@ -33,11 +34,14 @@ public class ProfileController {
     private final UsersService usersService;
     private final ProfileServiceImpl profileService;
 
+    private final UploadService uploadService;
     private final FollowersService followersService;
 
     @GetMapping
     public String showUserDetails(Model model, Authentication authentication) {
         model = followersService.userProfile(model, authentication, null);
+
+        model.addAttribute("img_UUID", UUID.randomUUID().toString());
         return "profile";
     }
 
@@ -64,19 +68,26 @@ public class ProfileController {
     public String addBlog(
             @RequestParam String title,
             @RequestParam Long categoryId,
-            @RequestParam String content) {
+            @RequestParam String content,
+            @RequestParam String image_name) {
+
+        image_name = image_name + ".jpeg";
+        System.out.println(image_name);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
             String userId = customUserDetails.getId().toString();
             Users currentUser = usersService.findByID(userId);
             Category selectedCategory = categoryService.getCategoryById(categoryId);
+
             if (currentUser != null && selectedCategory != null) {
                 Blog newBlog = Blog.builder().title(title)
                         .content(content)
                         .user(currentUser)
                         .category(selectedCategory)
                         .createdAt(LocalDateTime.now())
+                        .imgUrl(uploadService.imageExists(image_name) ?
+                                image_name : "defaultBlogImage.png")
                         .build();
                 blogService.createBlog(newBlog);
 
