@@ -18,7 +18,7 @@ public class UploadServiceImpl implements UploadService {
 
     public Path getUploadPath() {
         Path path = Paths.get("appUploads/").toAbsolutePath().normalize();
-        return Path.of(path + "\\");
+        return path;
         // for some reason it won't put separator at the end
     }
 
@@ -34,7 +34,9 @@ public class UploadServiceImpl implements UploadService {
         }
 
         try {
-            file.transferTo(new java.io.File(uploadPath + "\\" + img_UUID + ".jpeg"));
+            Path targetLocation = uploadPath.resolve(img_UUID + ".jpeg");
+            file.transferTo(targetLocation.toFile());
+            
             return ResponseEntity.ok("File uploaded successfully: " + file.getOriginalFilename());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed: " + e.getMessage());
@@ -51,7 +53,7 @@ public class UploadServiceImpl implements UploadService {
         File file = new File(uploadPath + "\\" + UUID);
 
         System.out.println(uploadPath + "\\" + UUID);
-        if (file.exists()){
+        if (file.exists()) {
             return true;
         }
 
