@@ -87,8 +87,7 @@ public class ProfileController {
                         .category(selectedCategory)
                         .createdAt(LocalDateTime.now())
                         .imgUrl(uploadService.imageExists(image_name) ?
-                                "defaultBlogImage.png" :
-                                image_name)
+                                image_name : "defaultBlogImage.png")
                         .build();
                 blogService.createBlog(newBlog);
 
