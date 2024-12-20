@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/status.css"/>
     <link rel="stylesheet" href="/css/navbar.css"/>
     <link rel="stylesheet" href="/css/imageUpload.css"/>
+    <link rel="stylesheet" href="/css/grid.css"/>
 </head>
 <body>
 <div th:replace="~{fragments::navbar}"></div>
@@ -117,6 +118,29 @@
             <button type="submit" onclick="showAddBlog()" class="addBtn">
                 Add new Blog
             </button>
+        </div>
+    </div>
+    <!--Blog grid-->
+    <div class="blog-grid">
+        <!-- Repeatable Blog Card -->
+        <div class="blog-card" th:each="blog : ${userBlogs}">
+            <!-- Image container -->
+            <div class="blog-image-container">
+                <img th:src="'/appUploads/' + ${blog.imgUrl}" alt="Blog Image">
+                <span class="blog-category" th:text="${blog.category.name}">Category Name</span>
+            </div>
+            <div class="blog-card-content">
+                <div>
+                    <div class="blog-meta" th:text="${#temporals.format(blog.createdAt, 'dd.MM.yyyy HH:mm')}">
+                        19.10.2024 18:05
+                    </div>
+                    <h2 class="blog-title" th:text="${blog.title}">Lorem Ipsum</h2>
+                </div>
+                <div class="blog-footer">
+                    <p th:text="${'-' + blog.user.firstname}" class="author-name">-Author Name</p>
+                    <a href="#" class="read-blog">READ BLOG</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

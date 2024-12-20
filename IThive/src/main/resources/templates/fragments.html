@@ -18,15 +18,21 @@
 <!--Header fragment-->
 <div th:fragment="navbar">
     <header>
-        <h1>IThive</h1>
-        <nav>
-            <a href="#">Following</a>
-            <a href="#">Explore</a>
-            <a href="/profile">My Profile</a>
+        <div class="logo">
+            <h1>IThive</h1>
+        </div>
+        <div class="nav-center">
+            <nav>
+                <a href="#">Following</a>
+                <a href="#">Explore</a>
+                <a href="/profile">My Profile</a>
+            </nav>
+        </div>
+        <div class="logout">
             <form th:action="@{/logout}" method="post" style="display: inline;">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
-        </nav>
+        </div>
     </header>
 </div>
 

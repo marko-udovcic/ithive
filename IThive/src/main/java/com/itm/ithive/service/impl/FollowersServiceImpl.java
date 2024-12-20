@@ -7,6 +7,7 @@ import com.itm.ithive.model.Enums.Role;
 import com.itm.ithive.model.Enums.Status;
 import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
+import com.itm.ithive.model.Blog;
 import com.itm.ithive.repository.FollowersRepository;
 import com.itm.ithive.service.FollowersService;
 import com.itm.ithive.util.CustomUserDetails;
@@ -117,6 +118,9 @@ public class FollowersServiceImpl implements FollowersService {
         model.addAttribute("following", listWhoIsUserFollowing(user).size());
         model.addAttribute("blogs", blogService.findBlogByUser(user).size());
         model.addAttribute("userStatus", user.getStatus().toString());
+
+        List<Blog> userBlogs = blogService.findBlogByUser(user);
+        model.addAttribute("userBlogs", userBlogs);
 
         List<Category> categories = categoryService.findAllCategories();
         model.addAttribute("categories", categories);
