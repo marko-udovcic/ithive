@@ -17,7 +17,7 @@ public class UploadServiceImpl implements UploadService {
     private Path uploadPath = getUploadPath();
 
     public Path getUploadPath() {
-        Path path = Paths.get("appUploads/").toAbsolutePath().normalize();
+        Path path = Paths.get("IThive\\src\\main\\resources\\static\\appUploads").toAbsolutePath().normalize();
         return path;
     }
 
