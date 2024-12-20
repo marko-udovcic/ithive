@@ -24,7 +24,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(Role.User.name()));
 
 
-        response.sendRedirect("/profile");
+        response.sendRedirect("/home");
 
 
     }
