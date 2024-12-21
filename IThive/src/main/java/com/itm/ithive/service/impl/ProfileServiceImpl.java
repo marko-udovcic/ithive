@@ -1,8 +1,10 @@
 package com.itm.ithive.service.impl;
 
+import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Enums.Role;
 import com.itm.ithive.model.Enums.Status;
 import com.itm.ithive.model.Users;
+import com.itm.ithive.repository.BlogRepository;
 import com.itm.ithive.repository.UsersRepository;
 import com.itm.ithive.service.UsersService;
 import com.itm.ithive.util.CustomUserDetails;
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class ProfileServiceImpl {
     private final UsersService usersService;
     private final UsersRepository usersRepository;
+    private final BlogRepository blogRepository;
 
     public void setUserStatusToPending(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); //get current auth user
@@ -57,5 +60,19 @@ public class ProfileServiceImpl {
             throw new RuntimeException("user not found");
         }
 
+    }
+
+    public void updateBlog(String title, Long id, String content) {
+        Optional<Blog> optionalBlog = blogRepository.findById(id);
+
+        if (optionalBlog.isPresent()) {
+            Blog blog = optionalBlog.get();
+            blog.setTitle(title);
+            blog.setContent(content);
+
+            blogRepository.save(blog);
+        } else {
+            throw new RuntimeException("Blog not found");
+        }
     }
 }
