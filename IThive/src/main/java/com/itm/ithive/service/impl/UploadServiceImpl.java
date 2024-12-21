@@ -2,12 +2,14 @@ package com.itm.ithive.service.impl;
 
 import com.itm.ithive.service.UploadService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -17,8 +19,13 @@ public class UploadServiceImpl implements UploadService {
     private Path uploadPath = getUploadPath();
 
     public Path getUploadPath() {
-        Path path = Paths.get("IThive\\src\\main\\resources\\static\\appUploads").toAbsolutePath().normalize();
-        return path;
+        try {
+            File staticdir = new ClassPathResource("static/appUploads").getFile();
+
+            return staticdir.toPath().toAbsolutePath().normalize();
+        } catch (IOException e) {
+            throw new RuntimeException("can't find static/appUploads");
+        }
     }
 
 
