@@ -20,12 +20,26 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> listAll(){
+    public List<Blog> listAll() {
         return blogRepository.findAll();
     }
 
     @Override
     public List<Blog> findBlogByUser(Users user) {
         return blogRepository.findByUser(user);
+    }
+
+    @Override
+    public Blog getBlogById(Long id) {
+        return blogRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public boolean deleteBlog(Long id) {
+        if (blogRepository.existsById(id)) {
+            blogRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
