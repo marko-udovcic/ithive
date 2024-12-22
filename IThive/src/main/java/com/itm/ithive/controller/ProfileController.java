@@ -13,10 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -62,6 +60,29 @@ public class ProfileController {
         profileService.updateUserStatusAndRole(username, status, role);
         return "redirect:/profile";
 
+    }
+
+    @PostMapping("/edit-blog")
+    public String updateBlog(@RequestParam("title") String title,
+                             @RequestParam("blog-id") Long id,
+                             @RequestParam("content") String content) {
+
+        profileService.updateBlog(title, id, content);
+
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/delete-blog/{id}")
+    public String deleteBlog(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        boolean isDeleted = blogService.deleteBlog(id);
+
+        if (isDeleted) {
+            redirectAttributes.addFlashAttribute("message", "Blog deleted successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Failed to delete the blog.");
+        }
+
+        return "redirect:/profile";
     }
 
     @PostMapping("/add-blog")

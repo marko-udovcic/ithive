@@ -10,5 +10,10 @@ public interface BlogService {
     public Blog createBlog(Blog blog);
 
     public List<Blog> listAll();
+
     public List<Blog> findBlogByUser(Users user);
+
+    public Blog getBlogById(Long id);
+
+    public boolean deleteBlog(Long id);
 }
