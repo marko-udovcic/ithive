@@ -203,7 +203,7 @@
                 </form>
 
                 <!-- <button class="delete-blog-btn">Delete</button> -->
-                <a href="#" class="read-blog">READ BLOG</a>
+                <a th:href="@{'/blog/blogView/' + ${blog.id}}" class="read-blog">READ BLOG</a>
               </div>
             </div>
           </div>

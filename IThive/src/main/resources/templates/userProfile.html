@@ -49,7 +49,7 @@
                     <h2 class="blog-title" th:text="${blog.title}">Lorem Ipsum</h2>
                 </div>
                 <div class="blog-footer">
-                    <a th:href="@{/blogs/view/{id}(id=${blog.id})}" class="read-blog">READ BLOG</a>
+                    <a th:href="@{'/blog/blogView/' + ${blog.id}}" class="read-blog">READ BLOG</a>
                 </div>
             </div>
         </div>

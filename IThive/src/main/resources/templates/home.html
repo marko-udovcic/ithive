@@ -35,9 +35,9 @@
                 </div>
                 <div class="blog-footer">
                     <a th:href="@{/users/userProfile/{username}(username=${blog.user.username})}" class="author-name">
-                        <span th:text="${'-' + blog.user.firstname}"></span>
+                        <span th:text="${'-' + blog.user.username}"></span>
                     </a>
-                    <a href="#" class="read-blog">READ BLOG</a>
+                    <a th:href="@{'/blog/blogView/' + ${blog.id}}" class="read-blog">READ BLOG</a>
                 </div>
             </div>
         </div>

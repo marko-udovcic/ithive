@@ -77,9 +77,9 @@
                 <form action="/followers/setUsersFollowing" method="post">
                     <input type="hidden" th:value="${username}" name="username"/>
                     <input
+                            name="button"
                             type="submit"
                             th:value="${button == 'Follow' ? 'Follow' : 'Following'}"
-                            th:disabled="${button != 'Follow'}"
                     />
                 </form>
             </li>
