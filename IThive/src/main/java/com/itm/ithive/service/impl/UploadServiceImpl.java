@@ -1,6 +1,7 @@
 package com.itm.ithive.service.impl;
 
 import com.itm.ithive.service.UploadService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
@@ -10,13 +11,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 
 @Service
 public class UploadServiceImpl implements UploadService {
 
     private Path uploadPath = getUploadPath();
+
+    @Override
+    public Path getFilePath(String fileName){
+        try {
+            Path path = new ClassPathResource("static/appUploads").getFile().toPath();
+            return path.resolve(fileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public Path getUploadPath() {
         try {
@@ -27,6 +41,8 @@ public class UploadServiceImpl implements UploadService {
             throw new RuntimeException("can't find static/appUploads");
         }
     }
+
+
 
 
     @Override
@@ -60,4 +76,21 @@ public class UploadServiceImpl implements UploadService {
         File file = filePath.toFile();
         return file.exists();
     }
+
+    @PostConstruct
+    public void copyDefaultImageIfNotExists() {
+        Path defaultImagePath = Paths.get(uploadPath.toString(), "defaultBlogImage.png");
+        System.out.println(defaultImagePath);
+        if (Files.notExists(defaultImagePath)) {
+            try {
+                ClassPathResource defaultImageResource = new ClassPathResource("static/appUploads/defaultBlogImage.png");
+                Files.copy(defaultImageResource.getInputStream(), defaultImagePath);
+                System.out.println("Default image copied to: " + defaultImagePath);
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to copy default image", e);
+            }
+        }
+    }
+
+
 }
