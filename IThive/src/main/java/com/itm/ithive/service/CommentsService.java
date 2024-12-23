@@ -1,6 +1,7 @@
 package com.itm.ithive.service;
 
 
+import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Comments;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,6 @@ public interface CommentsService {
     Comments saveComment(Comments comment);
     Comments updateComment(Comments comment, long id);
     void deleteComment(long id);
+    List<Comments> findCommentsByBlog(Blog blog);
+    List<Comments> findCommentsByParent(long id);
 }
