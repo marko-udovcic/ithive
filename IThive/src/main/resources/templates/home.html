@@ -34,7 +34,9 @@
                     <h2 class="blog-title" th:text="${blog.title}">Lorem Ipsum</h2>
                 </div>
                 <div class="blog-footer">
-                    <p th:text="${'-' + blog.user.firstname}" class="author-name">-Author Name</p>
+                    <a th:href="@{/users/userProfile/{username}(username=${blog.user.username})}" class="author-name">
+                        <span th:text="${'-' + blog.user.firstname}"></span>
+                    </a>
                     <a href="#" class="read-blog">READ BLOG</a>
                 </div>
             </div>
