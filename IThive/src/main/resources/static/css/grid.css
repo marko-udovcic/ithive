@@ -73,13 +73,20 @@
     margin-top: 10px; /* Add space above footer */
     font-size: 14px; /* Standard font size */
 }
-/* Author Name */
+/* Author Name (Clickable Link Styled as Span) */
 .author-name {
     font-family: var(--font-secondary);
     font-weight: 600;
     color: var(--bodytext); /* Neutral text color */
+    text-decoration: none; /* Remove underline */
     margin: 0; /* No extra margin */
+    cursor: pointer;
 }
+
+.author-name:hover {
+    color: var(--accent-color);
+}
+
 /* Read Blog Link */
 .read-blog {
     font-family: var(--font-secondary);
