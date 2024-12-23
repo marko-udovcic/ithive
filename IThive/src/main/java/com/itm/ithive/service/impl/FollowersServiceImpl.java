@@ -100,7 +100,7 @@ public class FollowersServiceImpl implements FollowersService {
         }
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        if (user == null) { // main user
+        if (user == null || user.getUsername().equals(customUserDetails.getUsername())) { // main user
             user = usersService.findUserByUsername(customUserDetails.getUsername()).orElseThrow(null); // make it right
             model.addAttribute("button", false);
         } else { // other user
