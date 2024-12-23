@@ -29,4 +29,6 @@ public interface FollowersService {
     public Model userProfile(Model model, Authentication authentication, Users user);
 
     public boolean doIFollow(Users user);
+
+    void deleteFollowerByFollowed(Users user);
 }

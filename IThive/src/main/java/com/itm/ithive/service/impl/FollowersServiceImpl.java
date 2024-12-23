@@ -11,6 +11,7 @@ import com.itm.ithive.model.Blog;
 import com.itm.ithive.repository.FollowersRepository;
 import com.itm.ithive.service.FollowersService;
 import com.itm.ithive.util.CustomUserDetails;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -157,6 +158,12 @@ public class FollowersServiceImpl implements FollowersService {
         }
 
         return false;
+    }
+
+    @Override
+    @Transactional
+    public void deleteFollowerByFollowed(Users user) {
+        followersRepository.deleteByFollowed(user);
     }
 
 }
