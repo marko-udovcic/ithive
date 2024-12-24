@@ -66,12 +66,13 @@ public class BlogController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBlog);
     }
 
-    @GetMapping("/blogView/{id}")
+    @GetMapping("/{id}")
     public String viewBlog (@PathVariable Long id, Model model){
         Blog blog = blogService.findBlogById(id);
         Users user = usersService.getCurrentUser();
         model = blogService.blogSetup(id, model);
 
+        model.addAttribute("me", user);
         if(Objects.equals(user.getUsername(), blog.getUser().getUsername())){
             model.addAttribute("button", false);
         }

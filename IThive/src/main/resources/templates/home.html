@@ -37,7 +37,7 @@
                     <a th:href="@{/users/userProfile/{username}(username=${blog.user.username})}" class="author-name">
                         <span th:text="${'-' + blog.user.username}"></span>
                     </a>
-                    <a th:href="@{'/blog/blogView/' + ${blog.id}}" class="read-blog">READ BLOG</a>
+                    <a th:href="@{'/blog/' + ${blog.id}}" class="read-blog">READ BLOG</a>
                 </div>
             </div>
         </div>

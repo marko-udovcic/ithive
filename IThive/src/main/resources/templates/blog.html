@@ -67,7 +67,7 @@
             <input type="hidden" name="blogId" th:value="${blog.id}">
             <div class="my-new-comment">
                 <div class="profile-image">
-                    <span th:utext="${blog.user.username[0]}">J</span>
+                    <span th:utext="${me.username[0]}">J</span>
                 </div>
                 <div class="comment-form">
                     <textarea id="myComment" name="comment" rows="5" placeholder="Leave a comment..."></textarea>
