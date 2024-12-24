@@ -70,8 +70,10 @@ public class BlogServiceImpl implements BlogService {
             likesRepository.deleteByBlog(blog);
             commentsRepository.deleteByBlog(blog);
             blogRepository.deleteById(id);
-            deleteBlogImage(blog.getImgUrl());
-
+            if (!"defaultBlogImage.png".equals(blog.getImgUrl())) {
+                deleteBlogImage(blog.getImgUrl());
+            }
+            
             return true;
         }
         return false;
@@ -82,7 +84,7 @@ public class BlogServiceImpl implements BlogService {
         return blogRepository.findById(id).orElse(null);
     }
 
-    public void deleteBlogImage(String fileName){
+    public void deleteBlogImage(String fileName) {
         try {
             Path path = new ClassPathResource("static/appUploads").getFile().toPath();
             Path filePath = path.resolve(fileName);
@@ -93,7 +95,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Model blogSetup(Long blogId, Model model){
+    public Model blogSetup(Long blogId, Model model) {
         Blog blog = findBlogById(blogId);
         String formattedCreatedAt = blog.getCreatedAt().format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"));
         List<Comments> allComments = commentsService.findCommentsByBlog(blog);
@@ -106,7 +108,7 @@ public class BlogServiceImpl implements BlogService {
         model.addAttribute("formattedCreatedAt", formattedCreatedAt);
 
 
-        for (Comments c : allComments){
+        for (Comments c : allComments) {
             int count = commentsService.findCommentsByParent(c.getId()).size();
             commentsMap.put(c.getId(), count);
         }
