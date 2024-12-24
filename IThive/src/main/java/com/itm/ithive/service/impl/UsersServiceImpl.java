@@ -12,6 +12,7 @@ import com.itm.ithive.service.UsersService;
 import com.itm.ithive.util.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,17 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<Users> findByStatus(Status status) {
         return usersRepository.findByStatus(status);
+    }
+
+    @Override
+    public Users getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()){
+            CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            return findUserByUsername(customUserDetails.getUsername()).orElse(null);
+        }
+
+        throw new SomethingWrong("Not authenticated!");
     }
 
 

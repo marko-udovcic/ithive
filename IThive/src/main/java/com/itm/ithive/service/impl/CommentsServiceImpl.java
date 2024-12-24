@@ -1,6 +1,7 @@
 package com.itm.ithive.service.impl;
 
 
+import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Comments;
 import com.itm.ithive.repository.CommentsRepository;
 import com.itm.ithive.service.CommentsService;
@@ -53,5 +54,15 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public void deleteComment(long id) {
         commentsRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Comments> findCommentsByBlog(Blog blog){
+        return commentsRepository.findCommentsByBlog(blog);
+    }
+
+    @Override
+    public List<Comments> findCommentsByParent(long id){
+        return commentsRepository.findCommentsByParent((int) id);
     }
 }

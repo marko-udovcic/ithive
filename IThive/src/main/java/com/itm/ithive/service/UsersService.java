@@ -23,4 +23,6 @@ public interface UsersService {
     public Optional<Users> findUserByUsername(String username);
 
     List<Users> findByStatus(Status status);
+
+    Users getCurrentUser();
 }

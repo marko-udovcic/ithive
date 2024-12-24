@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/fragment.css"/>
+    <link rel="stylesheet" href="/css/navbar.css"/>
+    <link rel="stylesheet" href="/css/blog.css"/>
+</head>
+<body>
+<div th:replace="~{fragments::navbar}"></div>
+<div class="container">
+
+    <!--    author-->
+    <div class="author-section">
+        <span th:utext="${blog.user.username}">John Doe</span>
+        <div class="button" th:if="${button != false}">
+            <form action="/followers/setUsersFollowing" method="post">
+                <!--                pogledaj jeli jos neko koristi ovu funkciju, premotaj u followersServiceImpl-->
+                <input type="hidden" th:value="${blog.user.username}" name="username"/>
+                <input
+                        type="submit"
+                        th:value="${button == 'Follow' ? 'Follow' : 'Following'}"
+                        name="button"
+                />
+            </form>
+        </div>
+        <!--        maybe set to unfollow, delete follow-->
+    </div>
+    <!--    author-->
+
+    <div class="blog-section">
+        <p><strong>Category: &ensp;</strong><span th:utext="${blog.category.name}"> #IT_Sys_Admin</span><br><br></p>
+        <img th:src="'/appUploads/' + ${blog.imgUrl}" alt="#blogPhoto">
+
+        <h4 th:utext="${blog.title}">Lorem Ipsum is simply dummy text</h4>
+
+        <form method="post" action="/likes/addLikes">
+            <input type="hidden" th:value="${blog.user.username}" name="username"/>
+            <input type="hidden" th:value="${blog.id}" name="blogId"/>
+            <input type="hidden" th:value="${doILike}" name="doILike"/>
+            <div class="likes-section">
+                <button id="like-button" class="like-button">
+                    <span class="heart" th:classappend="${doILike ? ' liked' : ''}">&#9825;</span>
+                </button>
+                <span th:utext="${likes}"></span>
+            </div>
+        </form>
+
+
+
+        <span th:utext="${formattedCreatedAt}">October 11, 2024</span>
+
+        <p th:utext="${blog.content}">Lorem Ipsum</p>
+    </div>
+
+    <div class="comment-section">
+
+        <h5>Comments</h5>
+        <div id="comment-number">
+            <span th:utext="${numberOfComments}" id="number">14</span>
+        </div>
+
+
+        <!-- my comment with depth = 0 -->
+        <form method="post" action="/comments">
+            <input type="hidden" name="blogId" th:value="${blog.id}">
+            <div class="my-new-comment">
+                <div class="profile-image">
+                    <span th:utext="${blog.user.username[0]}">J</span>
+                </div>
+                <div class="comment-form">
+                    <textarea id="myComment" name="comment" rows="5" placeholder="Leave a comment..."></textarea>
+                    <button>Post Comment</button>
+                </div>
+            </div>
+        </form>
+
+        <!--  my comment  -->
+
+        <!--        this is where shit happens -->
+
+        <!--        all other comments-->
+        <!--        comments with depth = 0-->
+        <div th:each="comment, status : ${listOfComments}">
+            <div th:if="${comment.depth == 0}">
+                <div class="other-comment">
+                    <div class="pure-comment">
+                        <div class="profile-image">
+                            <span th:utext="${comment.user.username[0]}"></span>
+                        </div>
+                        <div>
+                            <span><strong th:utext="${comment.user.username}"></strong></span>
+                            <span>:-:</span>
+                            <span th:utext="${#dates.format(comment.createdAt, 'MMMM d, yyyy')}">September 13th, 2021</span>
+                            <p th:utext="${comment.text}"></p>
+                            <input type="hidden" th:value="'my_' + ${comment.id}" name="help">
+                            <button th:onclick="showComments(this)">
+                                <span th:utext="'(' + ${commentsMap.get(comment.id)} + ') comments'"></span>
+                            </button>
+                            &ensp;&ensp;
+                            <button th:onclick="showReply(this)">Reply</button>
+                            <!--                            <button th:onclick="scrollToComment(this)">Reply</button>-->
+                        </div>
+                    </div>
+
+                    <form method="post" action="/comments">
+                        <input type="hidden" name="blogId" th:value="${blog.id}">
+                        <input type="hidden" th:value="'reply_' + ${comment.id} + '_' + ${comment.depth}" name="reply">
+                        <div th:class="'reply_' + ${comment.id} + '_' + ${comment.depth} + ' reply hidden'">
+                            <textarea name="comment" th:placeholder="'Reply to ' + ${comment.user.username} + ' comment ...'"></textarea>
+                            <button>Post</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!--                comments with depth = 1-->
+                <div th:each="comment2 : ${listOfComments}" class="comment_2">
+                    <div th:class="'my_' + ${comment2.parent} + ' hidden'">
+                        <div th:if="${comment2.depth == 1 && comment2.parent == comment.id}">
+                            <div class="other-comment">
+                                <div class="pure-comment">
+                                    <div class="profile-image">
+                                        <span th:utext="${comment2.user.username[0]}"></span>
+                                    </div>
+                                    <div>
+                                        <span><strong th:utext="${comment2.user.username}"></strong></span>
+                                        <span>:-:</span>
+                                        <span th:utext="${#dates.format(comment2.createdAt, 'MMMM d, yyyy')}">September 13th, 2021</span>
+                                        <p th:utext="${comment2.text}"></p>
+                                        <input type="hidden" th:value="'my_' + ${comment2.id}" name="help">
+                                        <button th:onclick="showComments(this)">
+                                            <span th:utext="'(' + ${commentsMap.get(comment2.id)} + ') comments'"></span>
+                                        </button>
+                                        &ensp;&ensp;
+                                        <button th:onclick="showReply(this)">Reply</button>
+                                    </div>
+                                </div>
+                                <form method="post" action="/comments">
+                                    <input type="hidden" name="blogId" th:value="${blog.id}">
+                                    <input type="hidden" th:value="'reply_' + ${comment2.id} + '_' + ${comment2.depth}" name="reply">
+                                    <div th:class="'reply_' + ${comment2.id} + '_' + ${comment2.depth} + ' reply hidden'">
+                                        <textarea name="comment" th:placeholder="'Reply to ' + ${comment2.user.username} + ' comment ...'"></textarea>
+                                        <button>Post</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!--                            comments with depth = 2-->
+                            <div th:each="comment3 : ${listOfComments}" class="comment_3">
+                                <div th:class="'my_' + ${comment3.parent} + ' hidden'">
+                                    <div th:if="${comment3.depth == 2 && comment3.parent == comment2.id}">
+                                        <div class="other-comment">
+                                            <div class="pure-comment">
+                                                <div class="profile-image">
+                                                    <span th:utext="${comment3.user.username[0]}"></span>
+                                                </div>
+
+                                                <div>
+                                                    <span><strong th:utext="${comment3.user.username}"></strong></span>
+                                                    <span>:-:</span>
+                                                    <span th:utext="${#dates.format(comment3.createdAt, 'MMMM d, yyyy')}">September 13th, 2021</span>
+                                                    <p th:utext="${comment3.text}"></p>
+                                                    <input type="hidden" th:value="'my_' + ${comment3.id}" name="help">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--            all other comments  -->
+
+    </div>
+</div>
+
+<script src="/js/blog.js"></script>
+</body>
+</html>
+
+
+
+<!--<span th:text="${#dates.format(comment_3.createdAt, 'MMMM d, yyyy')}">September 13th, 2021</span>-->
