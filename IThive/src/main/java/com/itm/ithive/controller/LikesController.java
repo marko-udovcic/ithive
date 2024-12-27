@@ -48,17 +48,16 @@ public class LikesController {
     public String addLikes(@RequestParam String username,
                            @RequestParam Long blogId,
                            @RequestParam boolean doILike,
-                           HttpServletRequest request){
+                           HttpServletRequest request) {
 
 
         Blog blog = blogService.findBlogById(blogId);
-        if (doILike){
+        if (doILike) {
             likesService.deleteLikeByBlog(blog);
-        }
-        else{
+        } else {
             likesService.addLikeByBlog(blog);
         }
 
-        return "redirect:/blog/blogView/" + blogId;
+        return "redirect:/blog/" + blogId;
     }
 }
