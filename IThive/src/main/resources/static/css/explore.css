@@ -1,0 +1,99 @@
+body {
+  background-color: var(--background-color);
+}
+.search-bar {
+  background: white;
+  height: 4rem;
+  width: 50%;
+  margin: 1rem auto;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+.search-bar input {
+  flex: 1;
+  margin: 0.5rem;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+}
+.search-bar input:focus {
+  border-radius: 30px;
+  outline: 2px solid var(--orange);
+}
+.search-bar button {
+  border-radius: 30px;
+  background-color: var(--orange);
+  color: white;
+  font-size: 1rem;
+  width: 20%;
+  margin: 0.5rem;
+  border: none;
+}
+.sortStatus {
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-family: var(--font-primary);
+  color: var(--headingblue);
+  border-radius: 30px;
+  border: none;
+  background-color: white;
+  font-weight: medium;
+  position: absolute;
+  right: 5%;
+}
+
+.search-bar-category {
+  min-height: 21vh;
+  position: relative;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.pagination a {
+  font-size: 1.5rem;
+  color: var(--headingblue);
+  font-family: var(--font-primary);
+  margin: 1rem;
+}
+.pagination a:hover {
+  color: var(--orange);
+}
+.hidden {
+  display: none;
+}
+
+.sortBlog button {
+  font-size: 1.5rem;
+  background: white;
+  padding: 0.4rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 30px;
+  margin: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+.sortBlog button:hover {
+  background: var(--orange);
+  color: white;
+}
+.filterBtn {
+  width: 20%;
+}
+.button-group {
+  /* display: flex; */
+  flex-direction: column;
+  border-radius: 20px;
+  background-color: white;
+  width: 25%;
+  margin-bottom: 1rem;
+}
+@media (max-width: 1000px) {
+  .search-bar {
+    width: 90%;
+  }
+  .container {
+    margin: 0;
+  }
+}
