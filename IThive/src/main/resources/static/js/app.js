@@ -1,8 +1,3 @@
-const genericOpenModal = (className) => {
-  const modal = document.querySelector(className);
-  modal.classList.toggle("hidden");
-};
-
 const showAddBlog = () => {
   const modal = document.querySelector(".add-blog");
   modal.classList.toggle("hidden");
@@ -30,4 +25,23 @@ const showEditBlog = (id, title, content) => {
 
   genericOpenModal(".edit-blog-container");
   console.log("prikaz podataka", id, " ", title, content);
+};
+
+let isModalOpen = false; // Track the modal state
+
+const genericOpenModal = (className) => {
+  const modal = document.querySelector(className);
+  if (isModalOpen) {
+    modal.style.display = "flex"; // Hide the modal
+  } else {
+    modal.style.display = "none"; // Show the modal
+  }
+
+  // Toggle modal state
+  isModalOpen = !isModalOpen;
+};
+
+const showSortModal = (e) => {
+  e.preventDefault();
+  genericOpenModal(".button-group");
 };
