@@ -24,8 +24,10 @@ public class ExploreController {
         System.out.println("Number of blogs retrieved: " + blogsPage.getTotalElements() + "pg:" + blogsPage.getTotalPages());
 
         model.addAttribute("blogs", blogsPage.getContent());
-        model.addAttribute("totalPages", blogsPage.getTotalPages());
-        model.addAttribute("currentPage", blogsPage.getNumber());
+        model.addAttribute("totalSize", blogsPage.getTotalElements());
+        model.addAttribute("currentSize", blogsPage.getSize());
+        model.addAttribute("title", params.getOrDefault("title", ""));
+        model.addAttribute("status", params.getOrDefault("status", "newest"));
 
         return "explore";
     }
