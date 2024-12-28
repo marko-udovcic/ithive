@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="/css/blog.css"/>
 </head>
 <body>
-<div th:replace="~{fragments::navbar}"></div>
-<div class="container">
 
+<div class="container">
+    <div th:replace="~{fragments::navbar}"></div>
     <!--    author-->
     <div class="author-section">
         <span th:utext="${blog.user.username}">John Doe</span>
@@ -46,7 +46,6 @@
                 <span th:utext="${likes}"></span>
             </div>
         </form>
-
 
 
         <span th:utext="${formattedCreatedAt}">October 11, 2024</span>
@@ -108,7 +107,8 @@
                         <input type="hidden" name="blogId" th:value="${blog.id}">
                         <input type="hidden" th:value="'reply_' + ${comment.id} + '_' + ${comment.depth}" name="reply">
                         <div th:class="'reply_' + ${comment.id} + '_' + ${comment.depth} + ' reply hidden'">
-                            <textarea name="comment" th:placeholder="'Reply to ' + ${comment.user.username} + ' comment ...'"></textarea>
+                            <textarea name="comment"
+                                      th:placeholder="'Reply to ' + ${comment.user.username} + ' comment ...'"></textarea>
                             <button>Post</button>
                         </div>
                     </form>
@@ -138,9 +138,11 @@
                                 </div>
                                 <form method="post" action="/comments">
                                     <input type="hidden" name="blogId" th:value="${blog.id}">
-                                    <input type="hidden" th:value="'reply_' + ${comment2.id} + '_' + ${comment2.depth}" name="reply">
+                                    <input type="hidden" th:value="'reply_' + ${comment2.id} + '_' + ${comment2.depth}"
+                                           name="reply">
                                     <div th:class="'reply_' + ${comment2.id} + '_' + ${comment2.depth} + ' reply hidden'">
-                                        <textarea name="comment" th:placeholder="'Reply to ' + ${comment2.user.username} + ' comment ...'"></textarea>
+                                        <textarea name="comment"
+                                                  th:placeholder="'Reply to ' + ${comment2.user.username} + ' comment ...'"></textarea>
                                         <button>Post</button>
                                     </div>
                                 </form>
@@ -185,7 +187,6 @@
 <script src="/js/blog.js"></script>
 </body>
 </html>
-
 
 
 <!--<span th:text="${#dates.format(comment_3.createdAt, 'MMMM d, yyyy')}">September 13th, 2021</span>-->

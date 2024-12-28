@@ -1,217 +1,217 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Document</title>
-    <link rel="stylesheet" href="/css/profile.css" />
-    <link rel="stylesheet" href="/css/status.css" />
-    <link rel="stylesheet" href="/css/navbar.css" />
-    <link rel="stylesheet" href="/css/imageUpload.css" />
+    <link rel="stylesheet" href="/css/profile.css"/>
+    <link rel="stylesheet" href="/css/status.css"/>
+    <link rel="stylesheet" href="/css/navbar.css"/>
+    <link rel="stylesheet" href="/css/imageUpload.css"/>
     <!-- <link rel="stylesheet" href="/css/grid.css" /> -->
-  </head>
-  <body>
+</head>
+<body>
+<div class="container">
     <div th:replace="~{fragments::navbar}"></div>
-    <div class="container">
-      <div th:replace="~{fragments::userStatus}"></div>
-      <div th:fragment="content" class="about-user">
+    <div th:replace="~{fragments::userStatus}"></div>
+    <div th:fragment="content" class="about-user">
         <div class="left-side">
-          <h2>FirstName</h2>
-          <h3 th:utext="${firstName} + ' ' + ${lastName}">Mollie Hall</h3>
-          <h2>About me</h2>
-          <p>Lorem ipsum dolor sit amet.</p>
+            <h2>FirstName</h2>
+            <h3 th:utext="${firstName} + ' ' + ${lastName}">Mollie Hall</h3>
+            <h2>About me</h2>
+            <p>Lorem ipsum dolor sit amet.</p>
         </div>
         <div class="right-side">
-          <h3>Company Name</h3>
-          <p>Company is not defined</p>
-          <h3>Email</h3>
-          <p th:text="${email}">mollie@gmail.com</p>
-          <div
-            th:if="${role =='User' && userStatus != 'Pending'}"
-            class="become-blogger"
-          >
-            <form action="/profile/become-blogger">
-              <p class="info-text">
-                Do you want to become blogger ? Send your blog to our mail :
-                <strong>ithub@gmail.com</strong>
-              </p>
-              <button class="sentBtn">I sent the Email</button>
-            </form>
-          </div>
+            <h3>Company Name</h3>
+            <p>Company is not defined</p>
+            <h3>Email</h3>
+            <p th:text="${email}">mollie@gmail.com</p>
+            <div
+                    th:if="${role =='User' && userStatus != 'Pending'}"
+                    class="become-blogger"
+            >
+                <form action="/profile/become-blogger">
+                    <p class="info-text">
+                        Do you want to become blogger ? Send your blog to our mail :
+                        <strong>ithub@gmail.com</strong>
+                    </p>
+                    <button class="sentBtn">I sent the Email</button>
+                </form>
+            </div>
         </div>
-      </div>
-      <div th:if="${role =='Admin'}" class="allrequests">
+    </div>
+    <div th:if="${role =='Admin'}" class="allrequests">
         <h2>Requests from Users</h2>
         <ul class="request-container">
-          <li class="header-row">
-            <h2 class="custom-text">Username</h2>
-            <h2 class="custom-text">Status</h2>
-            <h2 class="custom-text">Change Role</h2>
-          </li>
-          <li th:each="user : ${pendingUsers}" class="request-row">
-            <form action="/profile/updateUserStatus" method="post">
-              <input
-                type="hidden"
-                name="username"
-                th:value="${user.username}"
-              />
-              <h2
-                name="username"
-                th:text="${user.username}"
-                class="custom-text"
-              >
-                User1
-              </h2>
-              <select name="status" id="status" required>
-                <option
-                  th:each="status : ${statuses}"
-                  th:value="${status}"
-                  th:text="${status}"
-                  th:selected="${user.status == status}"
-                ></option>
-              </select>
-              <select name="roles" class="status-select">
-                <option
-                  th:each="role : ${roles}"
-                  th:value="${role}"
-                  th:text="${role}"
-                  th:selected="${user.role == role}"
-                ></option>
-              </select>
-              <button class="save-btn">Save</button>
-            </form>
-          </li>
+            <li class="header-row">
+                <h2 class="custom-text">Username</h2>
+                <h2 class="custom-text">Status</h2>
+                <h2 class="custom-text">Change Role</h2>
+            </li>
+            <li th:each="user : ${pendingUsers}" class="request-row">
+                <form action="/profile/updateUserStatus" method="post">
+                    <input
+                            type="hidden"
+                            name="username"
+                            th:value="${user.username}"
+                    />
+                    <h2
+                            name="username"
+                            th:text="${user.username}"
+                            class="custom-text"
+                    >
+                        User1
+                    </h2>
+                    <select name="status" id="status" required>
+                        <option
+                                th:each="status : ${statuses}"
+                                th:value="${status}"
+                                th:text="${status}"
+                                th:selected="${user.status == status}"
+                        ></option>
+                    </select>
+                    <select name="roles" class="status-select">
+                        <option
+                                th:each="role : ${roles}"
+                                th:value="${role}"
+                                th:text="${role}"
+                                th:selected="${user.role == role}"
+                        ></option>
+                    </select>
+                    <button class="save-btn">Save</button>
+                </form>
+            </li>
         </ul>
-      </div>
+    </div>
 
-      <div th:fragment="add-blog" class="add-blog hidden">
+    <div th:fragment="add-blog" class="add-blog hidden">
         <div class="addHeader">
-          <h2 class="add-title">Add new Blog</h2>
-          <h2 onclick="closeModal()">X</h2>
+            <h2 class="add-title">Add new Blog</h2>
+            <h2 onclick="closeModal()">X</h2>
         </div>
         <div class="form-container">
-          <form action="/profile/add-blog" method="POST" class="add-blog-form">
-            <label>Blog Title</label>
-            <input name="title" type="text" id="title" value="" required />
+            <form action="/profile/add-blog" method="POST" class="add-blog-form">
+                <label>Blog Title</label>
+                <input name="title" type="text" id="title" value="" required/>
 
-            <select
-              id="category"
-              name="categoryId"
-              class="category-select"
-              required
-            >
-              <option value="">-- Select Category --</option>
-              <option
-                th:each="category : ${categories}"
-                th:value="${category.id}"
-                th:text="${category.name}"
-              ></option>
-            </select>
+                <select
+                        id="category"
+                        name="categoryId"
+                        class="category-select"
+                        required
+                >
+                    <option value="">-- Select Category --</option>
+                    <option
+                            th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                    ></option>
+                </select>
 
-            <label>Blog Text</label>
-            <textarea
-              name="content"
-              placeholder="Write your blog here..."
-            ></textarea>
-            <br />
-            <!--     upload         -->
-            <div th:replace="~{fragments :: imageUpload}"></div>
-            <input
-              type="hidden"
-              id="image_name"
-              name="image_name"
-              th:value="${img_UUID}"
-            />
-            <!--     upload         -->
-            <button type="submit" class="submitBtn">Add blog</button>
-          </form>
+                <label>Blog Text</label>
+                <textarea
+                        name="content"
+                        placeholder="Write your blog here..."
+                ></textarea>
+                <br/>
+                <!--     upload         -->
+                <div th:replace="~{fragments :: imageUpload}"></div>
+                <input
+                        type="hidden"
+                        id="image_name"
+                        name="image_name"
+                        th:value="${img_UUID}"
+                />
+                <!--     upload         -->
+                <button type="submit" class="submitBtn">Add blog</button>
+            </form>
         </div>
-      </div>
-      <div
-        th:fragment="blogs-container"
-        th:if="${role =='Admin' or role == 'Blogger'}"
-        class="blogs-container"
-      >
+    </div>
+    <div
+            th:fragment="blogs-container"
+            th:if="${role =='Admin' or role == 'Blogger'}"
+            class="blogs-container"
+    >
         <div class="blog-header">
-          <h2>My blogs</h2>
-          <button type="submit" onclick="showAddBlog()" class="addBtn">
-            Add new Blog
-          </button>
+            <h2>My blogs</h2>
+            <button type="submit" onclick="showAddBlog()" class="addBtn">
+                Add new Blog
+            </button>
         </div>
-      </div>
-      <!--Blog grid-->
-      <div class="profile-blogs-container">
+    </div>
+    <!--Blog grid-->
+    <div class="profile-blogs-container">
         <div th:if="${message}" class="alert">
-          <p th:text="${message}"></p>
+            <p th:text="${message}"></p>
         </div>
 
         <div class="hidden edit-blog-container" id="edit-blog-container">
-          <form action="/profile/edit-blog" method="POST" class="add-blog-form">
-            <h2 onclick="closeEditModal()">X</h2>
-            <input type="hidden" name="blog-id" id="blog-id" />
-            <label>Blog Title</label>
-            <input name="title" type="text" id="blog-title" value="" required />
-            <label>Blog Text</label>
-            <textarea
-              name="content"
-              placeholder="Write your blog here..."
-            ></textarea>
-            <br />
-            <button type="submit" class="submitBtn">Edit blog</button>
-          </form>
+            <form action="/profile/edit-blog" method="POST" class="add-blog-form">
+                <h2 onclick="closeEditModal()">X</h2>
+                <input type="hidden" name="blog-id" id="blog-id"/>
+                <label>Blog Title</label>
+                <input name="title" type="text" id="blog-title" value="" required/>
+                <label>Blog Text</label>
+                <textarea
+                        name="content"
+                        placeholder="Write your blog here..."
+                ></textarea>
+                <br/>
+                <button type="submit" class="submitBtn">Edit blog</button>
+            </form>
         </div>
         <div class="blog-grid">
-          <!-- Repeatable Blog Card -->
-          <div class="blog-card" th:each="blog : ${userBlogs}">
-            <!-- Image container -->
-            <div class="blog-image-container">
-              <img th:src="'/appUploads/' + ${blog.imgUrl}" alt="Blog Image" />
-              <span class="blog-category" th:text="${blog.category.name}"
-                >Category Name</span
-              >
-            </div>
-            <div class="blog-card-content">
-              <div
-                class="blog-meta"
-                th:text="${#temporals.format(blog.createdAt, 'dd.MM.yyyy HH:mm')}"
-              >
-                19.10.2024 18:05
-              </div>
-              <div class="blog-title-edit">
-                <h2 class="blog-title" th:text="${blog.title}">Lorem Ipsum</h2>
-                <button
-                  class="edit-blog-btn"
-                  th:attr="onclick='showEditBlog(' + ${blog.id} + ', \'' + ${#strings.escapeJava(blog.title)} + '\',
+            <!-- Repeatable Blog Card -->
+            <div class="blog-card" th:each="blog : ${userBlogs}">
+                <!-- Image container -->
+                <div class="blog-image-container">
+                    <img th:src="'/appUploads/' + ${blog.imgUrl}" alt="Blog Image"/>
+                    <span class="blog-category" th:text="${blog.category.name}"
+                    >Category Name</span
+                    >
+                </div>
+                <div class="blog-card-content">
+                    <div
+                            class="blog-meta"
+                            th:text="${#temporals.format(blog.createdAt, 'dd.MM.yyyy HH:mm')}"
+                    >
+                        19.10.2024 18:05
+                    </div>
+                    <div class="blog-title-edit">
+                        <h2 class="blog-title" th:text="${blog.title}">Lorem Ipsum</h2>
+                        <button
+                                class="edit-blog-btn"
+                                th:attr="onclick='showEditBlog(' + ${blog.id} + ', \'' + ${#strings.escapeJava(blog.title)} + '\',
                   \'' + ${#strings.escapeJava(blog.content)} + '\')'"
-                >
-                  <a href="#edit-blog-container">Edit</a>
-                </button>
-              </div>
-              <div class="blog-footer">
-                <form
-                  method="POST"
-                  th:action="@{/profile/delete-blog/{id}(id=${blog.id})}"
-                >
-                  <input type="hidden" name="_method" value="DELETE" />
-                  <button
-                    type="submit"
-                    class="delete-blog-btn"
-                    onclick="return confirm('Are you sure you want to delete this blog?')"
-                  >
-                    Delete
-                  </button>
-                </form>
+                        >
+                            <a href="#edit-blog-container">Edit</a>
+                        </button>
+                    </div>
+                    <div class="blog-footer">
+                        <form
+                                method="POST"
+                                th:action="@{/profile/delete-blog/{id}(id=${blog.id})}"
+                        >
+                            <input type="hidden" name="_method" value="DELETE"/>
+                            <button
+                                    type="submit"
+                                    class="delete-blog-btn"
+                                    onclick="return confirm('Are you sure you want to delete this blog?')"
+                            >
+                                Delete
+                            </button>
+                        </form>
 
-                <!-- <button class="delete-blog-btn">Delete</button> -->
-                <a th:href="@{'/blog/' + ${blog.id}}" class="read-blog">READ BLOG</a>
-              </div>
+                        <!-- <button class="delete-blog-btn">Delete</button> -->
+                        <a th:href="@{'/blog/' + ${blog.id}}" class="read-blog">READ BLOG</a>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <script src="./js/app.js"></script>
-    <script src="./js/imageUpload.js"></script>
-  </body>
+<script src="./js/app.js"></script>
+<script src="./js/imageUpload.js"></script>
+</body>
 </html>

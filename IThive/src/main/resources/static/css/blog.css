@@ -1,9 +1,11 @@
+body{
+    background:var(--background-color);
+}
 .container {
     min-height: 100vh;
     margin: 0 10rem;
     background: var(--background-color);
     font-family: var(--font-primary);
-    background-color: var(--white);
 }
 
 .author-section {
@@ -41,10 +43,10 @@
 }
 
 .blog-section img {
-    max-height: 10%;
     width: 100%;
-    height: auto;
-    border-radius: 8px;
+    border-radius: 12px;
+    object-fit: cover;
+    height:31rem;
     margin-bottom: 1.5rem;
 }
 
@@ -113,7 +115,6 @@
     padding-top: 2%;
     border-radius: 8px;
     margin-bottom: 1.5rem;
-    background-color: var(--white);
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
 }
 
@@ -142,6 +143,7 @@
     margin-bottom: 30px;
     padding: 15px;
     border-radius: 8px;
+    background:white;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
     height: auto;
     flex-wrap: wrap;
@@ -205,6 +207,8 @@
     padding: 12px 25px;
     font-size: 16px;
     border: none;
+    width:35%;
+    margin:1rem auto;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -373,45 +377,6 @@ form {
     width: 100%; /* Prevents the form from taking up the full width */
 }
 
-/*  */
-
-@media (max-width: 768px) {
-    .container {
-        margin: 0 2rem;
-    }
-
-    .comment-section {
-        padding: 1rem;
-    }
-
-
-    .my-new-comment .profile-image {
-        margin-bottom: 10px;
-    }
-
-    .comment-form textarea,
-    .comment-form input[type="text"] {
-        width: 100%;
-    }
-}
-
-@media (max-width: 601px) {
-    .container {
-        margin: 0;
-        padding: 0;
-    }
-
-    .profile-image{
-        display: none;
-    }
-
-    .other-comment .profile-image{
-            display: none;
-        }
-}
-
-/*  */
-
 .hidden{
     display: none;
 }
@@ -447,3 +412,53 @@ form {
 .comment_3{
     margin-left: 5%;
 }
+
+
+@media (max-width: 768px) {
+    .comment-form button {
+        width:50%;
+        margin:1rem auto;
+    }
+    .blog-section img {
+        height:20rem;
+
+    }
+    .container {
+        margin: 0 2rem;
+    }
+
+    .comment-section {
+        padding: 1rem;
+    }
+
+
+    .my-new-comment .profile-image {
+        margin-bottom: 10px;
+    }
+
+    .comment-form textarea,
+    .comment-form input[type="text"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 601px) {
+    .blog-section img {
+        height:20rem;
+
+    }
+    .container {
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-image{
+        display: none;
+    }
+
+    .other-comment .profile-image{
+            display: none;
+        }
+}
+
+
