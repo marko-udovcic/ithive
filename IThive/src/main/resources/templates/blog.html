@@ -16,7 +16,6 @@
         <span th:utext="${blog.user.username}">John Doe</span>
         <div class="button" th:if="${button != false}">
             <form action="/followers/setUsersFollowing" method="post">
-                <!--                pogledaj jeli jos neko koristi ovu funkciju, premotaj u followersServiceImpl-->
                 <input type="hidden" th:value="${blog.user.username}" name="username"/>
                 <input
                         type="submit"
@@ -25,7 +24,6 @@
                 />
             </form>
         </div>
-        <!--        maybe set to unfollow, delete follow-->
     </div>
     <!--    author-->
 
