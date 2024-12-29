@@ -31,6 +31,7 @@
               Recommended
             </button>
             <button type="submit" name="status" value="newest">Newest</button>
+            <button type="submit" name="status" value="title">Title</button>
             <button type="submit" name="status" value="most-popular">
               Most Popular
             </button>
@@ -71,15 +72,11 @@
         </div>
       </div>
       <div class="pagination">
+        <a ></a>
         <a
-          th:if="${currentPage > 0}"
-          th:href="@{/explore(pageNumber=${currentPage - 1})}"
-          >Previous</a
-        >
-        <a
-          th:if="${currentPage < totalPages - 1}"
-          th:href="@{/explore(pageNumber=${currentPage + 1})}"
-          >Next</a
+          th:if="${currentSize < totalSize}"
+          th:href="@{/explore(size=${currentSize + 3}, oldTitle=${title}, oldStatus=${status})}"
+          >Load More</a
         >
       </div>
     </div>
