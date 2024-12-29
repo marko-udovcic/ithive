@@ -12,10 +12,12 @@
 <div class="container">
     <div th:replace="~{fragments :: navbar}"></div>
     <!-- Search bar -->
-    <div class="search-bar">
-        <input type="text" placeholder="Search blogs">
-        <button>Search</button>
-    </div>
+    <form action="/home" method="get" class="search-bar-category">
+        <div class="search-bar">
+            <input type="text" placeholder="Search blogs" name="title" />
+            <button>Search</button>
+        </div>
+    </form>
 
     <!--Blog grid-->
     <div class="blog-grid">
@@ -43,16 +45,13 @@
         </div>
     </div>
 
-
-
-    <!-- Pagination -->
     <div class="pagination">
-        <a href="#">&lt;</a>
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">&gt;</a>
+        <a ></a>
+        <a
+            th:if="${currentSize < totalSize}"
+            th:href="@{/home(size=${currentSize + 3})}"
+            >Load More</a
+        >
     </div>
     <div th:replace="~{fragments :: footer}"></div>
 </div>
