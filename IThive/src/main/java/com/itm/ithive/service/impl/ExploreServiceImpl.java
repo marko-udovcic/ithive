@@ -31,7 +31,7 @@
         @PersistenceContext
         private EntityManager entityManager;
 
-        private Sort getSort(Map<String, String> params) {
+        public Sort getSort(Map<String, String> params) {
             String status = params.getOrDefault("status", "newest");
             if ("newest".equalsIgnoreCase(status)) {
                 return Sort.by("createdAt").descending();
