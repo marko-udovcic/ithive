@@ -72,7 +72,7 @@ public class CommentsController {
         }
 
 
-        return "redirect:/blog/blogView/" + blogId;
+        return "redirect:/blog/" + blogId;
     }
 
 
