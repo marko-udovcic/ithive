@@ -2,6 +2,7 @@ package com.itm.ithive.service.impl;
 
 
 import com.itm.ithive.exceptions.SomethingWrong;
+import com.itm.ithive.exceptions.UserNotFound;
 import com.itm.ithive.model.Category;
 import com.itm.ithive.model.Enums.Role;
 import com.itm.ithive.model.Enums.Status;
@@ -50,15 +51,12 @@ public class FollowersServiceImpl implements FollowersService {
 
     @Override
     public Followers updateFollower(Followers follower, long id) {
-
         Followers existingFollower = followersRepository.findById(id).orElse(null);
-
         if (existingFollower != null) {
             existingFollower.setId(id);
             existingFollower.setFollower(follower.getFollower());
             existingFollower.setFollowed(follower.getFollowed());
             existingFollower.setDateFollowing(follower.getDateFollowing());
-
             return followersRepository.save(existingFollower);
         }
         follower.setId(id);
@@ -82,16 +80,16 @@ public class FollowersServiceImpl implements FollowersService {
 
     @Override
     public void followUser(Users user) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        Users mainUser = usersService.findUserByUsername(customUserDetails.getUsername()).orElse(null);
+        Users mainUser = usersService.getCurrentUser();
         if (user != null || mainUser != null) {
             Followers follow = new Followers();
             follow.setFollower(mainUser);
             follow.setFollowed(user);
             saveFollower(follow);
         }
-//        add an exception
+        else {
+            throw new UserNotFound("User not found! Redirection to login page ...");
+        }
     }
 
     @Override
@@ -99,12 +97,16 @@ public class FollowersServiceImpl implements FollowersService {
         if (authentication == null || !authentication.isAuthenticated()) {
             return model;
         }
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        if (user == null || user.getUsername().equals(customUserDetails.getUsername())) { // main user
-            user = usersService.findUserByUsername(customUserDetails.getUsername()).orElseThrow(null); // make it right
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        if (user == null || user.getUsername().equals(customUserDetails.getUsername())) {
+            // main user
+            user = usersService.findUserByUsername(customUserDetails.getUsername())
+                    .orElseThrow(() -> new UserNotFound("User not found! Redirection to login page ..."));
             model.addAttribute("button", false);
-        } else { // other user
+        }
+        else {
+            // other user
             if (!doIFollow(user)) {
                 model.addAttribute("button", "Follow");
             }
@@ -146,8 +148,7 @@ public class FollowersServiceImpl implements FollowersService {
         Users mainUser = usersService.findUserByUsername(customUserDetails.getUsername()).orElse(null);
 
         if (user == null || mainUser == null) {
-            throw new SomethingWrong("Error occured try again"); // change to throw an exception to see if session is still going
-//            usual error is "cannot convert String to customUserDetails"
+            throw new UserNotFound("User not found! Redirection to login page ...");
         }
 
         List<Followers> userFollowersList = listWhoFollowsUser(user);
