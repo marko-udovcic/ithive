@@ -11,8 +11,6 @@ import com.itm.ithive.repository.UsersRepository;
 import com.itm.ithive.service.UsersService;
 import com.itm.ithive.util.CustomUserDetails;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +21,6 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
     private final UsersRepository usersRepository;
