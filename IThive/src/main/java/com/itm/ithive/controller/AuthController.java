@@ -4,17 +4,18 @@ import com.itm.ithive.exceptions.UserAlreadyExisting;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.service.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping()
 public class AuthController {
 
-    @Autowired
-    private UsersService usersService;
+    private final UsersService usersService;
 
     @GetMapping("/")
     public String authHome() {
@@ -40,11 +41,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute Users user) throws UserAlreadyExisting {
-        try {
-            usersService.registerUser(user);
-        } catch (UserAlreadyExisting ex) {
-            throw ex;
-        }
+        usersService.registerUser(user);
 
         return "redirect:/login";
     }
