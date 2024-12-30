@@ -1,7 +1,6 @@
-package com.itm.ithive.controller;
+package com.itm.ithive.exceptions;
 
-import com.itm.ithive.exceptions.SomethingWrong;
-import com.itm.ithive.exceptions.UserAlreadyExisting;
+import com.itm.ithive.model.Blog;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,5 +20,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleSomethingWrongException(SomethingWrong exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
         // make an .html that corresponds IT_Hive
+    }
+
+    @ExceptionHandler(UserNotFound.class)
+    public String handleUserNotFoundException(UserNotFound exception){
+        return "redirect:/login";
+    }
+
+    @ExceptionHandler(BlogNotFound.class)
+    public ResponseEntity<String> handleBlogNotFoundException(BlogNotFound exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
