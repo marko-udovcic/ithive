@@ -16,8 +16,6 @@ public interface UsersService {
 
     public Users registerUser(Users user) throws UserAlreadyExisting;
 
-    public List<Users> listAll();
-
     Users findByID(String id);
 
     public Optional<Users> findUserByUsername(String username);

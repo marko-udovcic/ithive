@@ -3,37 +3,31 @@ package com.itm.ithive.service.impl;
 
 import com.itm.ithive.exceptions.SomethingWrong;
 import com.itm.ithive.exceptions.UserAlreadyExisting;
+import com.itm.ithive.exceptions.UserNotFound;
 import com.itm.ithive.model.Enums.Role;
 import com.itm.ithive.model.Enums.Status;
-import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.UsersRepository;
 import com.itm.ithive.service.UsersService;
 import com.itm.ithive.util.CustomUserDetails;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Service
 @AllArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
-    @Autowired
-    private UsersRepository usersRepository;
+    private final UsersRepository usersRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
-    @Override
     public Users createUsers(Users user) {
         return usersRepository.save(user);
     }
@@ -43,6 +37,7 @@ public class UsersServiceImpl implements UsersService {
     public Users registerUser(Users user) throws UserAlreadyExisting {
         if (user == null) {
             throw new SomethingWrong("Something's wrong come back in a minute");
+            // 404 or 500 error
         }
         if (usersRepository.findByUsername(user.getUsername()).isPresent() ||
                 usersRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -57,13 +52,6 @@ public class UsersServiceImpl implements UsersService {
     }
 
 
-    @Override
-    public List<Users> listAll() {
-        return usersRepository.findAll();
-        // make pagination
-    }
-
-    @Override
     public Users findByID(String id) {
         return usersRepository.findById(id).orElse(null);
     }
@@ -87,7 +75,7 @@ public class UsersServiceImpl implements UsersService {
             return findUserByUsername(customUserDetails.getUsername()).orElse(null);
         }
 
-        throw new SomethingWrong("Not authenticated!");
+        throw new UserNotFound("Not authenticated! Redirecting to login page...");
     }
 
 
