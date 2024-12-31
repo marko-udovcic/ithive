@@ -1,9 +1,6 @@
-package com.itm.ithive.service;
+package com.itm.ithive.service.interfaces;
 
 import com.itm.ithive.model.Category;
-import com.itm.ithive.model.Users;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

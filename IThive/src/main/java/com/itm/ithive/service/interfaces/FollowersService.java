@@ -1,11 +1,9 @@
-package com.itm.ithive.service;
+package com.itm.ithive.service.interfaces;
 
 
 import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
-import org.apache.catalina.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.List;

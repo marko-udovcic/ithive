@@ -1,15 +1,12 @@
-package com.itm.ithive.service;
+package com.itm.ithive.service.interfaces;
 
 
 import com.itm.ithive.exceptions.UserAlreadyExisting;
 import com.itm.ithive.model.Enums.Status;
 import com.itm.ithive.model.Users;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface UsersService {
     public Users createUsers(Users user);

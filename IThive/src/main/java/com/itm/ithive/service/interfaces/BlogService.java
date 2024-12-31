@@ -1,4 +1,4 @@
-package com.itm.ithive.service;
+package com.itm.ithive.service.interfaces;
 
 
 import com.itm.ithive.model.Blog;
@@ -20,5 +20,5 @@ public interface BlogService {
 
     public Blog findBlogById(Long id);
 
-    public Model blogSetup (Long blogId, Model model);
+    public Model blogSetup(Long blogId, Model model);
 }
