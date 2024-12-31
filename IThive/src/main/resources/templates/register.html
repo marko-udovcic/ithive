@@ -13,13 +13,11 @@
         <div th:if="${error == ''}" class="error">
             <p>Credentials already existing, try some others!</p>
         </div>
-        <!--        maybe make better responsive control when showing error -->
         <img th:src="@{/images/blogging.png}" alt="blogimg">
     </div>
     <div class="right-side">
         <h2>Create an account</h2>
         <form action="register" method="post">
-            <!--            <input type="hidden" name="_csrf" th:value="${_csrf.token}">-->
             <label>Username: </label>
             <input
                     type="text"

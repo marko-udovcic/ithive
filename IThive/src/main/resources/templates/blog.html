@@ -11,7 +11,6 @@
 
 <div class="container">
     <div th:replace="~{fragments::navbar}"></div>
-    <!--    author-->
     <div class="author-section">
         <span th:utext="${blog.user.username}">John Doe</span>
         <div class="button" th:if="${button != false}">
@@ -25,7 +24,6 @@
             </form>
         </div>
     </div>
-    <!--    author-->
 
     <div class="blog-section">
         <p><strong>Category: &ensp;</strong><span th:utext="${blog.category.name}"> #IT_Sys_Admin</span><br><br></p>
@@ -73,12 +71,6 @@
             </div>
         </form>
 
-        <!--  my comment  -->
-
-        <!--        this is where shit happens -->
-
-        <!--        all other comments-->
-        <!--        comments with depth = 0-->
         <div th:each="comment, status : ${listOfComments}">
             <div th:if="${comment.depth == 0}">
                 <div class="other-comment">
@@ -97,7 +89,6 @@
                             </button>
                             &ensp;&ensp;
                             <button th:onclick="showReply(this)">Reply</button>
-                            <!--                            <button th:onclick="scrollToComment(this)">Reply</button>-->
                         </div>
                     </div>
 
@@ -177,8 +168,6 @@
 
         </div>
 
-        <!--            all other comments  -->
-
     </div>
 </div>
 
@@ -187,4 +176,4 @@
 </html>
 
 
-<!--<span th:text="${#dates.format(comment_3.createdAt, 'MMMM d, yyyy')}">September 13th, 2021</span>-->
+
