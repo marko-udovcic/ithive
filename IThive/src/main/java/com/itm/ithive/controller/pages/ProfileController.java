@@ -1,13 +1,15 @@
-package com.itm.ithive.controller;
+package com.itm.ithive.controller.pages;
 
-import com.itm.ithive.service.*;
-import com.itm.ithive.service.impl.ProfileServiceImpl;
+import com.itm.ithive.service.impl.page.ProfileServiceImpl;
+import com.itm.ithive.service.interfaces.BlogService;
+import com.itm.ithive.service.interfaces.FollowersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.UUID;
 
 @Controller
@@ -19,7 +21,6 @@ public class ProfileController {
     private final ProfileServiceImpl profileService;
     private final FollowersService followersService;
 
-
     @GetMapping
     public String showUserDetails(Model model, Authentication authentication) {
         model = followersService.userProfile(model, authentication, null);
@@ -27,13 +28,11 @@ public class ProfileController {
         return "profile";
     }
 
-
     @GetMapping("/become-blogger")
     public String becomeBlogger(Model model) {
         profileService.setUserStatusToPending(model);
         return "redirect:/profile";
     }
-
 
     @PostMapping("/updateUserStatus")
     public String updateUserStatus(
@@ -45,7 +44,6 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-
     @PostMapping("/edit-blog")
     public String updateBlog(@RequestParam("title") String title,
                              @RequestParam("blog-id") Long id,
@@ -55,7 +53,6 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-
     @PostMapping("/delete-blog/{id}")
     public String deleteBlog(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message",
@@ -64,7 +61,6 @@ public class ProfileController {
 
         return "redirect:/profile";
     }
-
 
     @PostMapping("/add-blog")
     public String addBlog(

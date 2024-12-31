@@ -1,7 +1,7 @@
-package com.itm.ithive.controller.explore;
+package com.itm.ithive.controller.pages;
 
 import com.itm.ithive.model.Blog;
-import com.itm.ithive.service.impl.ExploreServiceImpl;
+import com.itm.ithive.service.impl.page.ExploreServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

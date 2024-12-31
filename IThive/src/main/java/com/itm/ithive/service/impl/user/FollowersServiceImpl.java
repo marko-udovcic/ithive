@@ -1,7 +1,5 @@
 package com.itm.ithive.service.impl;
 
-
-import com.itm.ithive.exceptions.SomethingWrong;
 import com.itm.ithive.exceptions.UserNotFound;
 import com.itm.ithive.model.Category;
 import com.itm.ithive.model.Enums.Role;
@@ -13,10 +11,7 @@ import com.itm.ithive.repository.FollowersRepository;
 import com.itm.ithive.service.FollowersService;
 import com.itm.ithive.util.CustomUserDetails;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -28,15 +23,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class FollowersServiceImpl implements FollowersService {
-
-    @Autowired
-    private UsersServiceImpl usersService;
-
-    @Autowired
-    private BlogServiceImpl blogService;
-
+    private final UsersServiceImpl usersService;
+    private final BlogServiceImpl blogService;
     private final CategoryServiceImpl categoryService;
-
     private final FollowersRepository followersRepository;
 
     @Override
@@ -86,8 +75,7 @@ public class FollowersServiceImpl implements FollowersService {
             follow.setFollower(mainUser);
             follow.setFollowed(user);
             saveFollower(follow);
-        }
-        else {
+        } else {
             throw new UserNotFound("User not found! Redirection to login page ...");
         }
     }
@@ -104,8 +92,7 @@ public class FollowersServiceImpl implements FollowersService {
             user = usersService.findUserByUsername(customUserDetails.getUsername())
                     .orElseThrow(() -> new UserNotFound("User not found! Redirection to login page ..."));
             model.addAttribute("button", false);
-        }
-        else {
+        } else {
             // other user
             if (!doIFollow(user)) {
                 model.addAttribute("button", "Follow");
@@ -129,13 +116,12 @@ public class FollowersServiceImpl implements FollowersService {
         model.addAttribute("categories", categories);
 
         List<Users> pendingUsers = usersService.findByStatus(Status.Pending);
-        
+
         List<Role> roles = Arrays.asList(Role.values());
         List<Status> statuses = Arrays.asList(Status.values());
         model.addAttribute("roles", roles);
         model.addAttribute("statuses", statuses);
         model.addAttribute("pendingUsers", pendingUsers);
-
 
         return model;
     }

@@ -1,20 +1,17 @@
-package com.itm.ithive.controller;
+package com.itm.ithive.controller.upload;
 
-import com.itm.ithive.service.UploadService;
-import lombok.AllArgsConstructor;
+import com.itm.ithive.service.interfaces.UploadService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 
-
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/upload")
 public class UploadController {
-
-    private UploadService uploadService;
-
+    private final UploadService uploadService;
 
     @PostMapping
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,

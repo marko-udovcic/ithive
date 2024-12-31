@@ -2,7 +2,6 @@ package com.itm.ithive.service.impl;
 
 import com.itm.ithive.service.UploadService;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ public class UploadServiceImpl implements UploadService {
     private Path uploadPath = getUploadPath();
 
     @Override
-    public Path getFilePath(String fileName){
+    public Path getFilePath(String fileName) {
         try {
             Path path = new ClassPathResource("static/appUploads").getFile().toPath();
             return path.resolve(fileName);
@@ -41,8 +40,6 @@ public class UploadServiceImpl implements UploadService {
             throw new RuntimeException("can't find static/appUploads");
         }
     }
-
-
 
 
     @Override
@@ -91,6 +88,4 @@ public class UploadServiceImpl implements UploadService {
             }
         }
     }
-
-
 }

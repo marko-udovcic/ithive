@@ -1,20 +1,14 @@
-package com.itm.ithive.controller;
+package com.itm.ithive.controller.users;
 
 
 import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
-import com.itm.ithive.service.FollowersService;
-import com.itm.ithive.service.UsersService;
-import com.itm.ithive.util.CustomUserDetails;
+import com.itm.ithive.service.interfaces.FollowersService;
+import com.itm.ithive.service.interfaces.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,15 +49,14 @@ public class FollowersController {
     @PostMapping("/setUsersFollowing")
     public String setUsersFollowing(HttpServletRequest request,
                                     @RequestParam String username,
-                                    @RequestParam String button){
+                                    @RequestParam String button) {
 
 
         Users user = userService.findUserByUsername(username).orElse(null);
 
-        if(Objects.equals(button, "Follow")){
+        if (Objects.equals(button, "Follow")) {
             followersService.followUser(user);
-        }
-        else{
+        } else {
             followersService.deleteFollowerByFollowed(user);
         }
 

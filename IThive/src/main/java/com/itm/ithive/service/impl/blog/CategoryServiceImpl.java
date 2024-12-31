@@ -1,10 +1,8 @@
 package com.itm.ithive.service.impl;
 
-
 import com.itm.ithive.model.Category;
 import com.itm.ithive.repository.CategoryRepository;
 import com.itm.ithive.service.CategoryService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-
     private final CategoryRepository categoryRepository;
 
     @Override

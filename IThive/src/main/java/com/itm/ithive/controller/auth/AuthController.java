@@ -1,11 +1,10 @@
-package com.itm.ithive.controller;
+package com.itm.ithive.controller.auth;
 
 import com.itm.ithive.exceptions.UserAlreadyExisting;
 import com.itm.ithive.model.Users;
-import com.itm.ithive.service.UsersService;
+import com.itm.ithive.service.interfaces.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

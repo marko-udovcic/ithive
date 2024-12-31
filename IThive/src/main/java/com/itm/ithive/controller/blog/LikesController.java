@@ -1,10 +1,9 @@
-package com.itm.ithive.controller;
-
+package com.itm.ithive.controller.blog;
 
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Likes;
-import com.itm.ithive.service.BlogService;
-import com.itm.ithive.service.LikesService;
+import com.itm.ithive.service.interfaces.BlogService;
+import com.itm.ithive.service.interfaces.LikesService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,18 +5,13 @@ import com.itm.ithive.model.Comments;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.BlogRepository;
 import com.itm.ithive.repository.CommentsRepository;
-import com.itm.ithive.repository.FollowersRepository;
 import com.itm.ithive.repository.LikesRepository;
 import com.itm.ithive.service.BlogService;
 import com.itm.ithive.service.CommentsService;
 import com.itm.ithive.service.LikesService;
-import com.itm.ithive.util.CustomUserDetails;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -35,12 +30,8 @@ public class BlogServiceImpl implements BlogService {
     private final LikesRepository likesRepository;
     private final CommentsRepository commentsRepository;
     private final BlogRepository blogRepository;
-
-    @Autowired
-    private LikesService likesService;
-
-    @Autowired
-    private CommentsService commentsService;
+    private final LikesService likesService;
+    private final CommentsService commentsService;
 
     @Override
     public Blog createBlog(Blog blog) {
@@ -67,13 +58,15 @@ public class BlogServiceImpl implements BlogService {
     public boolean deleteBlog(Long id) {
         if (blogRepository.existsById(id)) {
             Blog blog = findBlogById(id);
+
             likesRepository.deleteByBlog(blog);
             commentsRepository.deleteByBlog(blog);
             blogRepository.deleteById(id);
+
             if (!"defaultBlogImage.png".equals(blog.getImgUrl())) {
                 deleteBlogImage(blog.getImgUrl());
             }
-            
+
             return true;
         }
         return false;
@@ -90,7 +83,7 @@ public class BlogServiceImpl implements BlogService {
             Path filePath = path.resolve(fileName);
             Files.deleteIfExists(filePath);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to delete file: " + fileName, e);
         }
     }
 
@@ -107,7 +100,6 @@ public class BlogServiceImpl implements BlogService {
         model.addAttribute("numberOfComments", allComments.size());
         model.addAttribute("formattedCreatedAt", formattedCreatedAt);
 
-
         for (Comments c : allComments) {
             int count = commentsService.findCommentsByParent(c.getId()).size();
             commentsMap.put(c.getId(), count);
@@ -118,5 +110,4 @@ public class BlogServiceImpl implements BlogService {
         return model;
 
     }
-
 }
