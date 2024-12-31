@@ -1,8 +1,9 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.page;
 
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Followers;
 import com.itm.ithive.repository.BlogRepository;
+import com.itm.ithive.service.impl.user.UsersServiceImpl;
 import com.itm.ithive.specification.GenericSpecification;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
@@ -10,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

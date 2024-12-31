@@ -1,4 +1,4 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.blog;
 
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Comments;
@@ -6,9 +6,9 @@ import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.BlogRepository;
 import com.itm.ithive.repository.CommentsRepository;
 import com.itm.ithive.repository.LikesRepository;
-import com.itm.ithive.service.BlogService;
-import com.itm.ithive.service.CommentsService;
-import com.itm.ithive.service.LikesService;
+import com.itm.ithive.service.interfaces.BlogService;
+import com.itm.ithive.service.interfaces.CommentsService;
+import com.itm.ithive.service.interfaces.LikesService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;

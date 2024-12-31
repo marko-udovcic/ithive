@@ -1,4 +1,4 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.page;
 
 import com.itm.ithive.exceptions.BlogNotFound;
 import com.itm.ithive.exceptions.UserNotFound;
@@ -7,13 +7,14 @@ import com.itm.ithive.model.Category;
 import com.itm.ithive.model.Enums.Role;
 import com.itm.ithive.model.Enums.Status;
 import com.itm.ithive.model.Users;
-import com.itm.ithive.service.BlogService;
-import com.itm.ithive.service.CategoryService;
-import com.itm.ithive.service.UploadService;
-import com.itm.ithive.service.UsersService;
+import com.itm.ithive.service.interfaces.BlogService;
+import com.itm.ithive.service.interfaces.CategoryService;
+import com.itm.ithive.service.interfaces.UploadService;
+import com.itm.ithive.service.interfaces.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ public class ProfileServiceImpl {
     }
 
 
-    public void addNewBlog(String title, Long categoryId, String content, String image_name){
+    public void addNewBlog(String title, Long categoryId, String content, String image_name) {
         image_name = image_name + ".jpeg";
         Users currentUser = usersService.getCurrentUser();
         Category selectedCategory = categoryService.getCategoryById(categoryId);
@@ -75,17 +76,16 @@ public class ProfileServiceImpl {
 
         if (currentUser != null && selectedCategory != null) {
             Blog newBlog = Blog.builder().title(title)
-                        .content(content)
-                        .user(currentUser)
-                        .category(selectedCategory)
-                        .createdAt(LocalDateTime.now())
-                        .imgUrl(uploadService.imageExists(image_name) ?
-                                image_name : "defaultBlogImage.png")
-                        .build();
+                    .content(content)
+                    .user(currentUser)
+                    .category(selectedCategory)
+                    .createdAt(LocalDateTime.now())
+                    .imgUrl(uploadService.imageExists(image_name) ?
+                            image_name : "defaultBlogImage.png")
+                    .build();
 
             blogService.createBlog(newBlog);
-        }
-        else {
+        } else {
             throw new UserNotFound("User cannot be found! Redirection to login page in few seconds...");
         }
     }

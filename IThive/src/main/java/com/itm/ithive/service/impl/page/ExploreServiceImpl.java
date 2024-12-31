@@ -1,8 +1,9 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.page;
 
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Followers;
 import com.itm.ithive.repository.BlogRepository;
+import com.itm.ithive.service.impl.user.UsersServiceImpl;
 import com.itm.ithive.specification.GenericSpecification;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

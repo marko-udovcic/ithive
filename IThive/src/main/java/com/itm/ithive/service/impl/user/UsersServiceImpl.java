@@ -1,4 +1,4 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.user;
 
 import com.itm.ithive.exceptions.SomethingWrong;
 import com.itm.ithive.exceptions.UserAlreadyExisting;
@@ -7,7 +7,7 @@ import com.itm.ithive.model.Enums.Role;
 import com.itm.ithive.model.Enums.Status;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.UsersRepository;
-import com.itm.ithive.service.UsersService;
+import com.itm.ithive.service.interfaces.UsersService;
 import com.itm.ithive.util.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;

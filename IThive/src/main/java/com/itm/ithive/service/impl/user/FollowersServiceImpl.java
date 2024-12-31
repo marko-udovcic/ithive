@@ -1,4 +1,4 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.user;
 
 import com.itm.ithive.exceptions.UserNotFound;
 import com.itm.ithive.model.Category;
@@ -8,7 +8,9 @@ import com.itm.ithive.model.Followers;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.repository.FollowersRepository;
-import com.itm.ithive.service.FollowersService;
+import com.itm.ithive.service.interfaces.FollowersService;
+import com.itm.ithive.service.impl.blog.BlogServiceImpl;
+import com.itm.ithive.service.impl.blog.CategoryServiceImpl;
 import com.itm.ithive.util.CustomUserDetails;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

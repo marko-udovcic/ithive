@@ -1,9 +1,9 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.blog;
 
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Comments;
 import com.itm.ithive.repository.CommentsRepository;
-import com.itm.ithive.service.CommentsService;
+import com.itm.ithive.service.interfaces.CommentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

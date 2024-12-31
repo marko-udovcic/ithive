@@ -1,8 +1,8 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.blog;
 
 import com.itm.ithive.model.Category;
 import com.itm.ithive.repository.CategoryRepository;
-import com.itm.ithive.service.CategoryService;
+import com.itm.ithive.service.interfaces.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

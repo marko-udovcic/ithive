@@ -1,11 +1,11 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.blog;
 
 import com.itm.ithive.model.Blog;
 import com.itm.ithive.model.Likes;
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.LikesRepository;
-import com.itm.ithive.service.LikesService;
-import com.itm.ithive.service.UsersService;
+import com.itm.ithive.service.interfaces.LikesService;
+import com.itm.ithive.service.interfaces.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

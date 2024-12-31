@@ -1,6 +1,6 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.upload;
 
-import com.itm.ithive.service.UploadService;
+import com.itm.ithive.service.interfaces.UploadService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;

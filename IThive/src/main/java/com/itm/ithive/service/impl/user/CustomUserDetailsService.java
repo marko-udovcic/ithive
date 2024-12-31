@@ -1,4 +1,4 @@
-package com.itm.ithive.service.impl;
+package com.itm.ithive.service.impl.user;
 
 import com.itm.ithive.model.Users;
 import com.itm.ithive.repository.UsersRepository;
