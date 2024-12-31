@@ -1,6 +1,6 @@
 package com.itm.ithive.security;
 
-import com.itm.ithive.service.impl.CustomUserDetailsService;
+import com.itm.ithive.service.impl.user.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

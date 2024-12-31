@@ -32,7 +32,6 @@ public class CustomUserDetails implements UserDetails {
         return List.of(authority);
     }
 
-
     public CustomUserDetails(Users user) {
         this.id = user.getId();
         this.password = user.getPassword();
