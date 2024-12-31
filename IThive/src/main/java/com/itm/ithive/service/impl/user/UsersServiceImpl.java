@@ -39,6 +39,10 @@ public class UsersServiceImpl implements UsersService {
             throw new UserAlreadyExisting("Credentials already existing, please try something else");
         }
 
+        if(checkEmail(user.getEmail())){
+            throw new UserAlreadyExisting("Credentials are not valid, please try something else");
+        }
+
         user.setStatus(Status.Default);
         user.setRole(Role.User);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -77,6 +81,10 @@ public class UsersServiceImpl implements UsersService {
 
     public Optional<Users> findByUsername(String username) {
         return usersRepository.findByUsername(username);
+    }
+
+    public boolean checkEmail(String email){
+        return email.matches("^[\\w-\\.]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$");
     }
 
 }
