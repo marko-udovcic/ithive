@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/register.css"/>
+    <link rel="stylesheet" href="/css/error.css"/>
+</head>
+<body>
+<div class="login-register-container">
+    <div class="left-side">
+        <div th:if="${error == ''}" class="error">
+            <p>Credentials already existing, try some others!</p>
+        </div>
+        <img th:src="@{/images/blogging.png}" alt="blogimg">
+    </div>
+    <div class="right-side">
+        <h2>Create an account</h2>
+        <form action="register" method="post">
+            <label>Username: </label>
+            <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+            />
+            <label>Firstname: </label>
+            <input
+                    type="text"
+                    id="firstname"
+                    name="firstname"
+                    placeholder="Enter your firstname"
+                    required
+            />
+            <label>Lastname: </label>
+            <input
+                    type="text"
+                    id="lastname"
+                    name="lastname"
+                    placeholder="Enter your lastname"
+                    required
+            />
+            <label>Email: </label>
+            <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+            />
+
+            <label>Password: </label>
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+            />
+            <button class="btn-login-register" type="submit">Login</button>
+            <h3 class="sign-up-text">
+                Already have an account <a th:href="@{/login}">Log in</a>
+            </h3>
+        </form>
+    </div>
+</div>
+</body>
+</html>

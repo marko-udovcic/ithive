@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${pageTitle}">Page Title</title>
+    <link rel="stylesheet" href="/css/profile.css"/>
+    <link rel="stylesheet" href="/css/status.css"/>
+    <link rel="stylesheet" href="/css/navbar.css"/>
+</head>
+<body>
+
+<div th:fragment="navbar">
+    <header>
+        <div class="logo">
+            <h1>IThive</h1>
+        </div>
+        <div class="nav-center">
+            <nav>
+                <a href="/home">Following</a>
+                <a href="/explore">Explore</a>
+                <a href="/profile">My Profile</a>
+            </nav>
+        </div>
+        <div class="logout">
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </header>
+</div>
+
+
+<!-- Footer Fragment -->
+<div th:fragment="footer">
+    <footer>
+        <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+    </footer>
+</div>
+
+<!--User status: username, followers, following, blogs-->
+<div th:fragment="userStatus">
+    <nav class="user-status">
+        <ul>
+            <li>
+                <div id="user-photo">[[${username[0]}]]</div>
+            </li>
+            <li>
+            <span
+                    class="label"
+                    th:text="${username}"
+                    name="username"
+                    id="username"
+                    th:value="${username}"
+            ></span>
+            </li>
+            <li>
+                <span class="count" th:text="${following}"></span>
+                <span class="label">Following</span>
+            </li>
+            <li>
+                <span class="count" th:text="${followers}"></span>
+                <span class="label">Followers</span>
+            </li>
+            <li>
+                <span class="count" th:text="${blogs}"></span>
+                <span class="label">Blogs</span>
+            </li>
+            <li></li>
+            <li class="button" th:if="${button != false}">
+                <form action="/followers/setUsersFollowing" method="post">
+                    <input type="hidden" th:value="${username}" name="username"/>
+                    <input
+                            name="button"
+                            type="submit"
+                            th:value="${button == 'Follow' ? 'Follow' : 'Following'}"
+                    />
+                </form>
+            </li>
+        </ul>
+    </nav>
+</div>
+<!--#########-->
+
+<!--Image upload-->
+<div th:fragment="imageUpload">
+    <div class="drop-area" id="drop-area">
+        <div class="img_icon">
+            <img th:src="@{/images/image_icon.png}" alt="image_icon">
+        </div>
+        <p>Drag and drop a JPEG file here or</p>
+        <p><strong>Choose Image</strong></p>
+        <input type="file" id="fileInput" style="display: none;" accept="image/jpeg">
+    </div>
+
+    <div id="message"></div>
+</div>
+<!--#########-->
+
+
+</body>
+</html>

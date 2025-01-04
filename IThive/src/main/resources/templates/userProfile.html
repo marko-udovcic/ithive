@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="User profile page showcasing blogs and personal details.">
+    <meta name="keywords" content="User Profile, Blogs, IT Hive">
+    <title th:text="${firstName} + ' ' + ${lastName} + ' | Profile'">User Profile</title>
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/status.css" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{fragments::navbar}"></div>
+    <div th:replace="~{fragments::userStatus}"></div>
+    <!-- User Details Section -->
+    <div class="about-user">
+        <div class="left-side">
+            <h2>First Name</h2>
+            <h3 th:utext="${firstName} + ' ' + ${lastName}">Mollie Hall</h3>
+            <h2>About me</h2>
+            <p th:if="${aboutMe != null}" th:text="${aboutMe}">Lorem ipsum dolor sit amet.</p>
+            <p th:if="${aboutMe == null}">No information provided.</p>
+        </div>
+        <div class="right-side">
+            <h3>Company Name</h3>
+            <p th:text="${companyName != null ? companyName : 'Company is not defined'}">Company Name</p>
+            <h3>Email</h3>
+            <p th:text="${email}">mollie@gmail.com</p>
+        </div>
+    </div>
+
+    <!-- User Blogs Section -->
+    <div class="blog-grid" style="margin-top: 3rem;">
+        <div class="blog-card" th:each="blog : ${userBlogs}">
+            <!-- Blog Image and Category -->
+            <div class="blog-image-container">
+                <img th:src="'/appUploads/' + ${blog.imgUrl}" alt="Blog Image">
+                <span class="blog-category" th:text="${blog.category.name}">Category Name</span>
+            </div>
+
+            <!-- Blog Content -->
+            <div class="blog-card-content">
+                <div>
+                    <div class="blog-meta" th:text="${#temporals.format(blog.createdAt, 'dd.MM.yyyy HH:mm')}">
+                        19.10.2024 18:05
+                    </div>
+                    <h2 class="blog-title" th:text="${blog.title}">Lorem Ipsum</h2>
+                </div>
+                <div class="blog-footer">
+                    <a th:href="@{'/blog/' + ${blog.id}}" class="read-blog">READ BLOG</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

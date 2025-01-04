@@ -1,0 +1,77 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    flex-wrap: nowrap;
+}
+
+.logo h1 {
+    font-family: var(--font-primary);
+    font-weight: bold;
+    color: var(--headingblue);
+    margin: 0;
+}
+
+.nav-center nav {
+    display: flex;
+    gap: 15px; /* Spacing between navigation links */
+}
+
+.nav-center a {
+    text-decoration: none;
+    color: var(--bodytext);
+    font-family: var(--font-secondary);
+}
+
+.nav-center a:hover {
+    color: var(--orange);
+}
+
+.logout-form {
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn {
+    background-color: var(--orange);
+    color: var(--white);
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn:hover {
+    background-color: darkorange;
+}
+
+/* Responsive Design for Header */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* Center text when stacking vertically */
+  }
+
+  header h1 {
+    margin-right: 0; /* Remove right margin on smaller screens */
+  }
+
+  header nav {
+    margin-top: 10px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logout-btn {
+    margin-top: 10px;
+  }
+
+  .logout-form {
+    margin-left: 0; /* Remove margin for logout form on small screens */
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/fragment.css" />
+    <link rel="stylesheet" href="/css/explore.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <link rel="stylesheet" href="/css/grid.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div th:replace="~{fragments :: navbar}"></div>
+      <!-- Search bar -->
+      <form action="/explore" method="get" class="search-bar-category">
+        <div class="search-bar">
+          <input type="text" placeholder="Search blogs" name="title" />
+          <button>Search</button>
+        </div>
+        <div class="sortBlog">
+          <button
+            type="button"
+            onclick="showSortModal(event)"
+            class="filterBtn"
+          >
+            Filter
+          </button>
+          <div class="hidden button-group">
+            <button type="submit" name="status" value="recommended">
+              Recommended
+            </button>
+            <button type="submit" name="status" value="newest">Newest</button>
+            <button type="submit" name="status" value="title">Title</button>
+            <button type="submit" name="status" value="most-popular">
+              Most Popular
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="blog-grid">
+        <div class="blog-card" th:each="blog : ${blogs}">
+          <div class="blog-image-container">
+            <img th:src="'/appUploads/' + ${blog.imgUrl}" alt="Blog Image" />
+            <span class="blog-category" th:text="${blog.category.name}"
+              >Category Name</span
+            >
+          </div>
+          <div class="blog-card-content">
+            <div>
+              <div
+                class="blog-meta"
+                th:text="${#temporals.format(blog.createdAt, 'dd.MM.yyyy HH:mm')}"
+              >
+                19.10.2024 18:05
+              </div>
+              <h2 class="blog-title" th:text="${blog.title}">Lorem Ipsum</h2>
+            </div>
+            <div class="blog-footer">
+              <a
+                th:href="@{/users/userProfile/{username}(username=${blog.user.username})}"
+                class="author-name"
+              >
+                <span th:text="${'-' + blog.user.username}"></span>
+              </a>
+              <a th:href="@{'/blog/' + ${blog.id}}" class="read-blog"
+                >READ BLOG</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination">
+        <a ></a>
+        <a
+          th:if="${currentSize < totalSize}"
+          th:href="@{/explore(size=${currentSize + 3}, oldTitle=${title}, oldStatus=${status})}"
+          >Load More</a
+        >
+      </div>
+    </div>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
