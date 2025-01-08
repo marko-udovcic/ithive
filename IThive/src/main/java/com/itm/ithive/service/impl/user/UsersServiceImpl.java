@@ -31,7 +31,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users registerUser(Users user) throws UserAlreadyExisting {
         if (user == null) {
-            throw new SomethingWrong("Something's wrong come back in a minute");
+            throw new SomethingWrong("Something went wrong, please try again later");
         }
 
         if (usersRepository.findByUsername(user.getUsername()).isPresent() ||
@@ -39,7 +39,7 @@ public class UsersServiceImpl implements UsersService {
             throw new UserAlreadyExisting("Credentials already existing, please try something else");
         }
 
-        if(checkEmail(user.getEmail())){
+        if (!checkEmail(user.getEmail())) {
             throw new UserAlreadyExisting("Credentials are not valid, please try something else");
         }
 
@@ -67,6 +67,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication != null && authentication.isAuthenticated()) {
             CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
             return findUserByUsername(customUserDetails.getUsername()).orElse(null);
@@ -83,8 +84,7 @@ public class UsersServiceImpl implements UsersService {
         return usersRepository.findByUsername(username);
     }
 
-    public boolean checkEmail(String email){
+    public boolean checkEmail(String email) {
         return email.matches("^[\\w-\\.]+@[a-zA-Z0-9-]+\\.[a-zA-Z]{2,}$");
     }
-
 }
