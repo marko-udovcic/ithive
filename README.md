@@ -4,6 +4,8 @@
 ## Description
 Welcome to IT_Hive - simple web application blog that is made for people to share their thoughts, stats and even courses expanding our IT community. IT_Hive is inspired by different people in IT that have same problem, finding one place for IT people to post their thoughts on different world IT events.
 
+## Application Demo
+https://github.com/user-attachments/assets/a0197114-c131-4f31-b6ef-3997807651ac
 
 ## User Story
 This app is defined by registrated people, so registration and log in are a must. There need to be three types of people: regular user, blogger and an admin.
